@@ -1,5 +1,17 @@
+using ObligatorioMVC.Datos;
+
 var builder = WebApplication.CreateBuilder(args);
-//Hola mundo
+
+//Configurar conexion
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    // Aquí, obtenemos la cadena de conexión desde la configuración de la 
+    aplicación.
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
