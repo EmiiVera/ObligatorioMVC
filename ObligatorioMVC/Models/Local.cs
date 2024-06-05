@@ -2,14 +2,18 @@
 {
     public class Local
     {
-        public int idLocal { get; set; }
-        public string nombreLocal { get; set; }
-        public string ciudad { get; set; }
-        public string direccion { get; set; }
-        public string telefonoLocal { get; set; }
-        public ResponsableLocal responsableLocal { get; set; }
-        public List<Maquina> maquinas { get; set; }
-        public Local() { }
+        [Key]
+        public int IdLocal { get; set; }
+        [Required]
+        [Display(Name = "Local")]
+        public string NombreLocal { get; set; }
+        public string Ciudad { get; set; }
+        public string Direccion { get; set; }
+        [Required]
+        [Display(Name = "Teléfono")]
+        public string TelefonoLocal { get; set; }
+        public ResponsableLocal? ResponsableLocal { get; set; }
+        public List<Maquina>? Maquinas { get; set; }
 
     }
 }

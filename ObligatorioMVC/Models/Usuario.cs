@@ -2,9 +2,14 @@
 {
     public abstract class Usuario
     {
-        public int idUsuario {  get; set; }
-        public string nombreUsuario { get; set; }
-        public string telefonoUsuario { get; set; }
+        [Key]
+        public int IdUsuario {  get; set; }
+        [Required]
+        [Display(Name = "Nombre")]
+        public string NombreUsuario { get; set; }
+        [Required]
+        [Display(Name = "Teléfono")]
+        public string TelefonoUsuario { get; set; }
 
         public abstract string ToString();
         

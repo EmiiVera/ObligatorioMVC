@@ -1,8 +1,11 @@
-﻿namespace ObligatorioMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace ObligatorioMVC.Models;
+
+public class Ejercicio
 {
-    public class Ejercicio
-    {
-        public int idEjercicio { get; set; }
-        public Maquina maquina { get; set; }
-    }
+    [key]
+    public int IdEjercicio { get; set; }
+    [Display(Name = "Máquina")]
+    public Maquina? Maquina { get; set; }
+
 }

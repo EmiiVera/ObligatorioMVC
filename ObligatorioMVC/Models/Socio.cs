@@ -2,9 +2,10 @@
 {
     public class Socio : Usuario
     {
-        public string tipo {  get; set; }
+        [Required]
+        public string Tipo {  get; set; }
+        [Required]
         public Local local { get; set; }
-        public Socio() { }
 
         public override string ToString()
         {

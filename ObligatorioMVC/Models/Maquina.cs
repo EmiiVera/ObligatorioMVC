@@ -2,14 +2,22 @@
 {
     public class Maquina
     {
-        public int idMaquina { get; set; }
-        public DateTime fechaCompra {  get; set; }
-        public double precioCompra { get; set; }
-        public string disponibilidad { get; set; }
-        public TipoMaquina tipoMaquina { get; set; }
-        public DateTime vidaUtil { get; set; }
+        [Key]
+        public int IdMaquina { get; set; }
+        [Required]
+        [Display(Name = "Fecha de la compra")]
+        public DateTime FechaCompra {  get; set; }
+        [Required]
+        [Display(Name = "Precio")]
+        public double PrecioCompra { get; set; }
+        [Required]
+        public string Disponibilidad { get; set; }
+        public TipoMaquina? TipoMaquina { get; set; }
+        [Required]
+        [Display(Name = "Vida útil")]
+        public DateTime VidaUtil { get; set; }
 
-        public DateTime vidaUtilRestante()
+        public DateTime VidaUtilRestante()
         {
             DateTime dateTime = DateTime.Now;
 

@@ -2,13 +2,13 @@
 {
     public class Rutina
     {
-        public int idRutina { get; set; }
-        public string tipoRutina { get; set; }
-        public string descripcion { get; set; }
-        public double promedio { get; set; }
-        public void Promedio ()
-        {
-            promedio = 0; //calcular promedio
-        }
+        [Key]
+        public int IdRutina { get; set; }
+        [Required]
+        [Display(Name = "Tipo de Rutina")]
+        public string TipoRutina { get; set; }
+        public string? Descripcion { get; set; }
+        public double? Promedio { get; set; }
+
     }
 }
