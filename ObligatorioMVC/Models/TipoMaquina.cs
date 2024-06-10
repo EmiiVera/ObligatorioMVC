@@ -1,4 +1,6 @@
-﻿namespace ObligatorioMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ObligatorioMVC.Models
 {
     public class TipoMaquina
     {

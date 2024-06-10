@@ -1,9 +1,15 @@
-﻿namespace ObligatorioMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ObligatorioMVC.Models
 {
     public class Maquina
     {
         [Key]
         public int IdMaquina { get; set; }
+        [Required]
+        public int IdLocal { get; set; }
+        [Required]
+        public int IdTipoMaquina { get; set; }
         [Required]
         [Display(Name = "Fecha de la compra")]
         public DateTime FechaCompra {  get; set; }
@@ -17,11 +23,11 @@
         [Display(Name = "Vida útil")]
         public DateTime VidaUtil { get; set; }
 
-        public DateTime VidaUtilRestante()
+        public void VidaUtilRestante()
         {
             DateTime dateTime = DateTime.Now;
 
-            return vidaUtil;
+            //"Calcular vida";
         }
     }
 }

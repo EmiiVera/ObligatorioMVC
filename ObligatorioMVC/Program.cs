@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ObligatorioMVC.Datos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,8 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Configurar conexion
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    // Aquí, obtenemos la cadena de conexión desde la configuración de la 
-    aplicación.
+    // Aquí, obtenemos la cadena de conexión desde la configuración de la aplicación.
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
