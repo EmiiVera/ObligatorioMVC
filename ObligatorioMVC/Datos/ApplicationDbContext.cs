@@ -30,6 +30,11 @@ namespace ObligatorioMVC.Datos
         {
             base.OnModelCreating(modelBuilder);
 
+            //Configuracion para relacion N a N
+            //RutinaEjercicio
+            modelBuilder.Entity<RutinaEjercicio>()
+                .HasKey(up => new { up.IdRutina, up.IdEjercicio });
+
             modelBuilder.Entity<RutinaEjercicio>()
                 .HasOne(up => up.Ejercicio)
                 .WithMany(up => up.rutinaEjercicios)
@@ -39,6 +44,10 @@ namespace ObligatorioMVC.Datos
                 .HasOne(up => up.Rutina)
                 .WithMany(up => up.rutinaEjercicios)
                 .HasForeignKey(up => up.IdRutina);
+
+            //SocioRutina
+            modelBuilder.Entity<SocioRutina>()
+                .HasKey(up => new { up.idSocio, up.idRutina });
 
             modelBuilder.Entity<SocioRutina>()
                 .HasOne(up => up.Socio)

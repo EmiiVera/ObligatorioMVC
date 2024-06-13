@@ -13,10 +13,16 @@ namespace ObligatorioMVC.Models
         [Required]
         public string Ciudad { get; set; }
         [Required]
+        [Display(Name = "Dirección")]
+
         public string Direccion { get; set; }
         [Required]
         [Display(Name = "Teléfono")]
         public string? TelefonoLocal { get; set; }
+        [Required]
+        [Display(Name = "Responsable")]
+
+        public int idResponsableLocal { get; set; }
         public ResponsableLocal? ResponsableLocal { get; set; }
         public List<Maquina>? Maquinas { get; set; }
 

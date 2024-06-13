@@ -5,10 +5,10 @@ namespace ObligatorioMVC.Models
 {
     public class Socio : Usuario
     {
-        [Key]
         [Required]
         public int IdLocal { get; set; }
         [Required]
+        [ForeignKey(nameof(IdLocal))]
         public Local? local { get; set; }
         public TipoSocio? tipoSocio { get; set; }
         public ICollection<SocioRutina>? socioRutinas { get; set; }
