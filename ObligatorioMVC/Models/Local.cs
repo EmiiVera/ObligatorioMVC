@@ -10,11 +10,13 @@ namespace ObligatorioMVC.Models
         [Display(Name = "Local")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 50 caracteres.")]
         public string NombreLocal { get; set; }
+        [Required]
         public string Ciudad { get; set; }
+        [Required]
         public string Direccion { get; set; }
         [Required]
         [Display(Name = "Teléfono")]
-        public string TelefonoLocal { get; set; }
+        public string? TelefonoLocal { get; set; }
         public ResponsableLocal? ResponsableLocal { get; set; }
         public List<Maquina>? Maquinas { get; set; }
 

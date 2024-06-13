@@ -8,6 +8,8 @@ public class Ejercicio
     [Display(Name = "Máquina")]
     [Required]
     public int IdTipoMaquina { get; set; }
-    public Maquina? Maquina { get; set; }
+    public TipoMaquina? tipoMaquina { get; set; }
+    public ICollection<RutinaEjercicio> rutinaEjercicios { get; set; }
+
 
 }
