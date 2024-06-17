@@ -6,11 +6,16 @@ namespace ObligatorioMVC.Models
     public class Socio : Usuario
     {
         [Required]
+        [ForeignKey("Local")]
         public int IdLocal { get; set; }
+
         [Required]
-        [ForeignKey(nameof(IdLocal))]
         public Local? local { get; set; }
+
+        [Display(Name = "Tipo de Socio")]
+        [ForeignKey("TipoSocio")]
         public TipoSocio? tipoSocio { get; set; }
+
         public ICollection<SocioRutina>? socioRutinas { get; set; }
 
         public override string ToString()

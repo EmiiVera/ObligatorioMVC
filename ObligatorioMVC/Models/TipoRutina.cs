@@ -7,6 +7,7 @@ namespace ObligatorioMVC.Models
         [Key]
         public int IdTipoRutina { get; set; }
         [Required]
-        public string Nombre { get; set; }
+        [Display(Name = "Tipo de Rutina")]
+        public string NombreTipoRutina { get; set; }
     }
 }
