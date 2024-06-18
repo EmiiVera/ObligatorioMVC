@@ -108,14 +108,11 @@ namespace ObligatorioMVC.Migrations
                     b.Property<DateTime>("VidaUtil")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("localIdLocal")
-                        .HasColumnType("int");
-
                     b.HasKey("IdMaquina");
 
-                    b.HasIndex("IdTipoMaquina");
+                    b.HasIndex("IdLocal");
 
-                    b.HasIndex("localIdLocal");
+                    b.HasIndex("IdTipoMaquina");
 
                     b.ToTable("Maquina");
                 });
@@ -305,19 +302,21 @@ namespace ObligatorioMVC.Migrations
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
                 {
+                    b.HasOne("ObligatorioMVC.Models.Local", "Local")
+                        .WithMany("Maquinas")
+                        .HasForeignKey("IdLocal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
                         .WithMany()
                         .HasForeignKey("IdTipoMaquina")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ObligatorioMVC.Models.Local", "local")
-                        .WithMany("Maquinas")
-                        .HasForeignKey("localIdLocal");
+                    b.Navigation("Local");
 
                     b.Navigation("TipoMaquina");
-
-                    b.Navigation("local");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>

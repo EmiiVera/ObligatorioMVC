@@ -34,8 +34,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="idResponsableLocal" class="control-label"></label>
-                <input asp-for="idResponsableLocal" class="form-control" />
-                <span asp-validation-for="idResponsableLocal" class="text-danger"></span>
+                <select asp-for="idResponsableLocal" class ="form-control" asp-items="ViewBag.idResponsableLocal"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdMaquina" class="control-label"></label>
+                <input asp-for="IdMaquina" class="form-control" />
+                <span asp-validation-for="IdMaquina" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

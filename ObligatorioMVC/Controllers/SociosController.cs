@@ -22,8 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Socios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Socio.Include(s => s.local);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Socio.ToListAsync());
         }
 
         // GET: Socios/Details/5
@@ -35,7 +34,6 @@ namespace ObligatorioMVC.Controllers
             }
 
             var socio = await _context.Socio
-                .Include(s => s.local)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (socio == null)
             {
@@ -48,7 +46,6 @@ namespace ObligatorioMVC.Controllers
         // GET: Socios/Create
         public IActionResult Create()
         {
-            ViewData["IdLocal"] = new SelectList(_context.Local, "IdLocal", "Ciudad");
             return View();
         }
 
@@ -65,7 +62,6 @@ namespace ObligatorioMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "IdLocal", "Ciudad", socio.IdLocal);
             return View(socio);
         }
 
@@ -82,7 +78,6 @@ namespace ObligatorioMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "IdLocal", "Ciudad", socio.IdLocal);
             return View(socio);
         }
 
@@ -118,7 +113,6 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "IdLocal", "Ciudad", socio.IdLocal);
             return View(socio);
         }
 
@@ -131,7 +125,6 @@ namespace ObligatorioMVC.Controllers
             }
 
             var socio = await _context.Socio
-                .Include(s => s.local)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (socio == null)
             {

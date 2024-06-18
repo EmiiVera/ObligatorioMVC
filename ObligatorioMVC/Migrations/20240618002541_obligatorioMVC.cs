@@ -142,7 +142,6 @@ namespace ObligatorioMVC.Migrations
                     PrecioCompra = table.Column<double>(type: "float", nullable: false),
                     Disponibilidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdLocal = table.Column<int>(type: "int", nullable: false),
-                    localIdLocal = table.Column<int>(type: "int", nullable: true),
                     IdTipoMaquina = table.Column<int>(type: "int", nullable: false),
                     VidaUtil = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -150,10 +149,11 @@ namespace ObligatorioMVC.Migrations
                 {
                     table.PrimaryKey("PK_Maquina", x => x.IdMaquina);
                     table.ForeignKey(
-                        name: "FK_Maquina_Local_localIdLocal",
-                        column: x => x.localIdLocal,
+                        name: "FK_Maquina_Local_IdLocal",
+                        column: x => x.IdLocal,
                         principalTable: "Local",
-                        principalColumn: "IdLocal");
+                        principalColumn: "IdLocal",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Maquina_TipoMaquina_IdTipoMaquina",
                         column: x => x.IdTipoMaquina,
@@ -226,14 +226,14 @@ namespace ObligatorioMVC.Migrations
                 column: "idResponsableLocal");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Maquina_IdLocal",
+                table: "Maquina",
+                column: "IdLocal");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Maquina_IdTipoMaquina",
                 table: "Maquina",
                 column: "IdTipoMaquina");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Maquina_localIdLocal",
-                table: "Maquina",
-                column: "localIdLocal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rutina_tipoRutina",

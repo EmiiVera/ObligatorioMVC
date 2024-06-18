@@ -22,7 +22,8 @@ namespace ObligatorioMVC.Controllers
         // GET: Locals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Local.ToListAsync());
+            var applicationDbContext = _context.Local.Include(l => l.ResponsableLocal);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Locals/Details/5
@@ -34,6 +35,7 @@ namespace ObligatorioMVC.Controllers
             }
 
             var local = await _context.Local
+                .Include(l => l.ResponsableLocal)
                 .FirstOrDefaultAsync(m => m.IdLocal == id);
             if (local == null)
             {
@@ -46,6 +48,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Locals/Create
         public IActionResult Create()
         {
+            ViewData["idResponsableLocal"] = new SelectList(_context.ResponsableLocal, "IdUsuario", "Nombre");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdLocal,NombreLocal,Ciudad,Direccion,TelefonoLocal,idResponsableLocal")] Local local)
+        public async Task<IActionResult> Create([Bind("IdLocal,NombreLocal,Ciudad,Direccion,TelefonoLocal,idResponsableLocal,IdMaquina")] Local local)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ObligatorioMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["idResponsableLocal"] = new SelectList(_context.ResponsableLocal, "IdUsuario", "Discriminator", local.idResponsableLocal);
             return View(local);
         }
 
@@ -78,6 +82,7 @@ namespace ObligatorioMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["idResponsableLocal"] = new SelectList(_context.ResponsableLocal, "IdUsuario", "Discriminator", local.idResponsableLocal);
             return View(local);
         }
 
@@ -86,7 +91,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdLocal,NombreLocal,Ciudad,Direccion,TelefonoLocal,idResponsableLocal")] Local local)
+        public async Task<IActionResult> Edit(int id, [Bind("IdLocal,NombreLocal,Ciudad,Direccion,TelefonoLocal,idResponsableLocal,IdMaquina")] Local local)
         {
             if (id != local.IdLocal)
             {
@@ -113,6 +118,7 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["idResponsableLocal"] = new SelectList(_context.ResponsableLocal, "IdUsuario", "Discriminator", local.idResponsableLocal);
             return View(local);
         }
 
@@ -125,6 +131,7 @@ namespace ObligatorioMVC.Controllers
             }
 
             var local = await _context.Local
+                .Include(l => l.ResponsableLocal)
                 .FirstOrDefaultAsync(m => m.IdLocal == id);
             if (local == null)
             {

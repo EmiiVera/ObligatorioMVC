@@ -13,12 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdLocal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipoMaquina)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FechaCompra)
             </th>
             <th>
@@ -26,6 +20,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Disponibilidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Local)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoMaquina)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.VidaUtil)
@@ -37,12 +37,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdLocal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoMaquina)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.FechaCompra)
             </td>
             <td>
@@ -50,6 +44,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Disponibilidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Local.Ciudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoMaquina.nombreTipoMaquina)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VidaUtil)

@@ -1,66 +1,73 @@
 ﻿@model IEnumerable<ObligatorioMVC.Models.Local>
 
 @{
-    ViewData["Title"] = "Locales";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Locales</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Ingresar Nuevo Local</a>
+    <a asp-action="Create">Create New</a>
 </p>
-@if(Model.Count() == 0)
+@if (Model.Count() == 0)
 {
     <h4>No hay locales</h4>
-} else {
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreLocal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ciudad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TelefonoLocal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.idResponsableLocal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreLocal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ciudad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelefonoLocal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idResponsableLocal)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdLocal">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdLocal">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdLocal">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 }
-
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreLocal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ciudad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TelefonoLocal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResponsableLocal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdMaquina)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreLocal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ciudad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TelefonoLocal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResponsableLocal.NombreUsuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdMaquina)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdLocal">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdLocal">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdLocal">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

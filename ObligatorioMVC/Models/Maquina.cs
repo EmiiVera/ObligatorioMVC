@@ -24,7 +24,7 @@ namespace ObligatorioMVC.Models
         [ForeignKey("Local")]
         public int IdLocal { get; set; }
 
-        public Local? local { get; set; }
+        public Local? Local { get; set; }
 
         [Required]
         [Display(Name = "Máquina")]
