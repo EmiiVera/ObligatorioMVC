@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ObligatorioMVC.Models.Maquina>
+﻿@model IEnumerable<ObligatorioMVC.Models.Maquina>;
+
 
 @{
     ViewData["Title"] = "Index";
@@ -8,6 +9,16 @@
 
 <p>
     <a asp-action="Create">Create New</a>
+
+    <!--<div class="form-group">
+        <select for="Disponible" class="form-control">
+            <option value="">Disponibilidad</option>
+            @foreach (var disponible in Model)
+            {
+                <option value="@disponible.Disponibilidad.Nombre">@disponible.Disponibilidad.Nombre</option>
+            }
+        </select>
+    </div>-->
 </p>
 <table class="table">
     <thead>
@@ -20,9 +31,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Disponibilidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Local)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoMaquina)
@@ -43,13 +51,10 @@
                 @Html.DisplayFor(modelItem => item.PrecioCompra)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Disponibilidad)
+                @Html.DisplayFor(modelItem => item.Disponibilidad.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Local.Ciudad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMaquina.nombreTipoMaquina)
+                @Html.DisplayFor(modelItem => item.TipoMaquina.NombreTipoMaquina)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VidaUtil)

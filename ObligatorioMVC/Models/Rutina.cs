@@ -21,6 +21,6 @@ namespace ObligatorioMVC.Models
 
         public ICollection<SocioRutina>? socioRutinas { get; set; }
 
-        public ICollection<RutinaEjercicio> rutinaEjercicios { get; set; }
+        public ICollection<RutinaEjercicio>? rutinaEjercicios { get; set; }
     }
 }

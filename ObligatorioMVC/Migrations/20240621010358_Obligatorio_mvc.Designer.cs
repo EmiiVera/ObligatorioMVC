@@ -12,8 +12,8 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618002541_obligatorioMVC")]
-    partial class obligatorioMVC
+    [Migration("20240621010358_Obligatorio_mvc")]
+    partial class Obligatorio_mvc
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,38 @@ namespace ObligatorioMVC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Disponibilidad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Disponibilidad");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.DisponibilidadMaquina", b =>
+                {
+                    b.Property<int>("IdDisponibilidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdMaquina")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdDisponibilidad", "IdMaquina");
+
+                    b.HasIndex("IdMaquina");
+
+                    b.ToTable("DisponibilidadMaquinas");
+                });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
@@ -36,17 +68,14 @@ namespace ObligatorioMVC.Migrations
                     b.Property<int>("IdTipoMaquina")
                         .HasColumnType("int");
 
-                    b.Property<int?>("tipoMaquinaidTipoMaquina")
-                        .HasColumnType("int");
-
                     b.HasKey("IdEjercicio");
 
-                    b.HasIndex("tipoMaquinaidTipoMaquina");
+                    b.HasIndex("IdTipoMaquina");
 
                     b.ToTable("Ejercicio");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
                 {
                     b.Property<int>("IdLocal")
                         .ValueGeneratedOnAdd()
@@ -62,7 +91,11 @@ namespace ObligatorioMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdMaquina")
+                    b.Property<int?>("IdMaquina")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdResponsableLocal")
                         .HasColumnType("int");
 
                     b.Property<string>("NombreLocal")
@@ -74,14 +107,11 @@ namespace ObligatorioMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("idResponsableLocal")
-                        .HasColumnType("int");
-
                     b.HasKey("IdLocal");
 
-                    b.HasIndex("idResponsableLocal");
+                    b.HasIndex("IdResponsableLocal");
 
-                    b.ToTable("Local");
+                    b.ToTable("Locales");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
@@ -92,30 +122,26 @@ namespace ObligatorioMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMaquina"));
 
-                    b.Property<string>("Disponibilidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdLocal")
+                    b.Property<int?>("IdTipoMaquina")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoMaquina")
+                    b.Property<int?>("LocalesIdLocal")
                         .HasColumnType("int");
 
                     b.Property<double>("PrecioCompra")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("VidaUtil")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("VidaUtil")
+                        .HasColumnType("int");
 
                     b.HasKey("IdMaquina");
 
-                    b.HasIndex("IdLocal");
-
                     b.HasIndex("IdTipoMaquina");
+
+                    b.HasIndex("LocalesIdLocal");
 
                     b.ToTable("Maquina");
                 });
@@ -177,17 +203,20 @@ namespace ObligatorioMVC.Migrations
 
             modelBuilder.Entity("ObligatorioMVC.Models.TipoMaquina", b =>
                 {
-                    b.Property<int>("idTipoMaquina")
+                    b.Property<int>("IdTipoMaquina")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idTipoMaquina"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoMaquina"));
 
-                    b.Property<string>("nombreTipoMaquina")
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreTipoMaquina")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("idTipoMaquina");
+                    b.HasKey("IdTipoMaquina");
 
                     b.ToTable("TipoMaquina");
                 });
@@ -260,6 +289,9 @@ namespace ObligatorioMVC.Migrations
                 {
                     b.HasBaseType("ObligatorioMVC.Models.Usuario");
 
+                    b.Property<double>("Sueldo")
+                        .HasColumnType("float");
+
                     b.HasDiscriminator().HasValue("ResponsableLocal");
                 });
 
@@ -270,54 +302,70 @@ namespace ObligatorioMVC.Migrations
                     b.Property<int>("IdLocal")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoSocio")
+                    b.Property<int>("IdTipoSocio")
                         .HasColumnType("int");
 
-                    b.Property<int>("localIdLocal")
+                    b.Property<int>("LocalesIdLocal")
                         .HasColumnType("int");
 
-                    b.HasIndex("TipoSocio");
+                    b.Property<int?>("tipoSocioIdTipoSocio")
+                        .HasColumnType("int");
 
-                    b.HasIndex("localIdLocal");
+                    b.HasIndex("LocalesIdLocal");
+
+                    b.HasIndex("tipoSocioIdTipoSocio");
 
                     b.HasDiscriminator().HasValue("Socio");
                 });
 
+            modelBuilder.Entity("ObligatorioMVC.Models.DisponibilidadMaquina", b =>
+                {
+                    b.HasOne("ObligatorioMVC.Models.Disponibilidad", "Disponibilidad")
+                        .WithMany("DisponibilidadMaquinas")
+                        .HasForeignKey("IdDisponibilidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ObligatorioMVC.Models.Maquina", "Maquina")
+                        .WithMany("DisponibilidadMaquinas")
+                        .HasForeignKey("IdMaquina")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Disponibilidad");
+
+                    b.Navigation("Maquina");
+                });
+
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
-                    b.HasOne("ObligatorioMVC.Models.TipoMaquina", "tipoMaquina")
-                        .WithMany()
-                        .HasForeignKey("tipoMaquinaidTipoMaquina");
-
-                    b.Navigation("tipoMaquina");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
-                {
-                    b.HasOne("ObligatorioMVC.Models.ResponsableLocal", "ResponsableLocal")
-                        .WithMany()
-                        .HasForeignKey("idResponsableLocal")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ResponsableLocal");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
-                {
-                    b.HasOne("ObligatorioMVC.Models.Local", "Local")
-                        .WithMany("Maquinas")
-                        .HasForeignKey("IdLocal")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
                         .WithMany()
                         .HasForeignKey("IdTipoMaquina")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Local");
+                    b.Navigation("TipoMaquina");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
+                {
+                    b.HasOne("ObligatorioMVC.Models.ResponsableLocal", "ResponsableLocal")
+                        .WithMany()
+                        .HasForeignKey("IdResponsableLocal");
+
+                    b.Navigation("ResponsableLocal");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
+                {
+                    b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
+                        .WithMany()
+                        .HasForeignKey("IdTipoMaquina");
+
+                    b.HasOne("ObligatorioMVC.Models.Locales", null)
+                        .WithMany("Maquinas")
+                        .HasForeignKey("LocalesIdLocal");
 
                     b.Navigation("TipoMaquina");
                 });
@@ -373,19 +421,24 @@ namespace ObligatorioMVC.Migrations
 
             modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
                 {
-                    b.HasOne("ObligatorioMVC.Models.TipoSocio", "tipoSocio")
+                    b.HasOne("ObligatorioMVC.Models.Locales", "Locales")
                         .WithMany()
-                        .HasForeignKey("TipoSocio");
-
-                    b.HasOne("ObligatorioMVC.Models.Local", "local")
-                        .WithMany()
-                        .HasForeignKey("localIdLocal")
+                        .HasForeignKey("LocalesIdLocal")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("local");
+                    b.HasOne("ObligatorioMVC.Models.TipoSocio", "tipoSocio")
+                        .WithMany()
+                        .HasForeignKey("tipoSocioIdTipoSocio");
+
+                    b.Navigation("Locales");
 
                     b.Navigation("tipoSocio");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Disponibilidad", b =>
+                {
+                    b.Navigation("DisponibilidadMaquinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
@@ -393,9 +446,14 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("rutinaEjercicios");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
                 {
                     b.Navigation("Maquinas");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
+                {
+                    b.Navigation("DisponibilidadMaquinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>

@@ -12,7 +12,7 @@ public class Ejercicio
     [ForeignKey("TipoMaquina")]
     public int IdTipoMaquina { get; set; }
 
-    public TipoMaquina? tipoMaquina { get; set; }
+    public TipoMaquina? TipoMaquina { get; set; }
 
     public ICollection<RutinaEjercicio> rutinaEjercicios { get; set; }
 

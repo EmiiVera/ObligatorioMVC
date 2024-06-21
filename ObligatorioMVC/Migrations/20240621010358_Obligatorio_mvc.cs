@@ -6,22 +6,36 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ObligatorioMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class obligatorioMVC : Migration
+    public partial class Obligatorio_mvc : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TipoMaquina",
+                name: "Disponibilidad",
                 columns: table => new
                 {
-                    idTipoMaquina = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombreTipoMaquina = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoMaquina", x => x.idTipoMaquina);
+                    table.PrimaryKey("PK_Disponibilidad", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoMaquina",
+                columns: table => new
+                {
+                    IdTipoMaquina = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreTipoMaquina = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoMaquina", x => x.IdTipoMaquina);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,17 +70,17 @@ namespace ObligatorioMVC.Migrations
                 {
                     IdEjercicio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdTipoMaquina = table.Column<int>(type: "int", nullable: false),
-                    tipoMaquinaidTipoMaquina = table.Column<int>(type: "int", nullable: true)
+                    IdTipoMaquina = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ejercicio", x => x.IdEjercicio);
                     table.ForeignKey(
-                        name: "FK_Ejercicio_TipoMaquina_tipoMaquinaidTipoMaquina",
-                        column: x => x.tipoMaquinaidTipoMaquina,
+                        name: "FK_Ejercicio_TipoMaquina_IdTipoMaquina",
+                        column: x => x.IdTipoMaquina,
                         principalTable: "TipoMaquina",
-                        principalColumn: "idTipoMaquina");
+                        principalColumn: "IdTipoMaquina",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,7 +129,25 @@ namespace ObligatorioMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Local",
+                name: "DisponibilidadMaquinas",
+                columns: table => new
+                {
+                    IdMaquina = table.Column<int>(type: "int", nullable: false),
+                    IdDisponibilidad = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DisponibilidadMaquinas", x => new { x.IdDisponibilidad, x.IdMaquina });
+                    table.ForeignKey(
+                        name: "FK_DisponibilidadMaquinas_Disponibilidad_IdDisponibilidad",
+                        column: x => x.IdDisponibilidad,
+                        principalTable: "Disponibilidad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locales",
                 columns: table => new
                 {
                     IdLocal = table.Column<int>(type: "int", nullable: false)
@@ -124,12 +156,12 @@ namespace ObligatorioMVC.Migrations
                     Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TelefonoLocal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    idResponsableLocal = table.Column<int>(type: "int", nullable: false),
-                    IdMaquina = table.Column<int>(type: "int", nullable: false)
+                    IdMaquina = table.Column<int>(type: "int", nullable: false),
+                    IdResponsableLocal = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Local", x => x.IdLocal);
+                    table.PrimaryKey("PK_Locales", x => x.IdLocal);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,26 +172,23 @@ namespace ObligatorioMVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrecioCompra = table.Column<double>(type: "float", nullable: false),
-                    Disponibilidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdLocal = table.Column<int>(type: "int", nullable: false),
-                    IdTipoMaquina = table.Column<int>(type: "int", nullable: false),
-                    VidaUtil = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IdTipoMaquina = table.Column<int>(type: "int", nullable: true),
+                    VidaUtil = table.Column<int>(type: "int", nullable: false),
+                    LocalesIdLocal = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Maquina", x => x.IdMaquina);
                     table.ForeignKey(
-                        name: "FK_Maquina_Local_IdLocal",
-                        column: x => x.IdLocal,
-                        principalTable: "Local",
-                        principalColumn: "IdLocal",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Maquina_Locales_LocalesIdLocal",
+                        column: x => x.LocalesIdLocal,
+                        principalTable: "Locales",
+                        principalColumn: "IdLocal");
                     table.ForeignKey(
                         name: "FK_Maquina_TipoMaquina_IdTipoMaquina",
                         column: x => x.IdTipoMaquina,
                         principalTable: "TipoMaquina",
-                        principalColumn: "idTipoMaquina",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdTipoMaquina");
                 });
 
             migrationBuilder.CreateTable(
@@ -171,22 +200,24 @@ namespace ObligatorioMVC.Migrations
                     NombreUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TelefonoUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    Sueldo = table.Column<double>(type: "float", nullable: true),
                     IdLocal = table.Column<int>(type: "int", nullable: true),
-                    localIdLocal = table.Column<int>(type: "int", nullable: true),
-                    TipoSocio = table.Column<int>(type: "int", nullable: true)
+                    LocalesIdLocal = table.Column<int>(type: "int", nullable: true),
+                    IdTipoSocio = table.Column<int>(type: "int", nullable: true),
+                    tipoSocioIdTipoSocio = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.IdUsuario);
                     table.ForeignKey(
-                        name: "FK_Usuario_Local_localIdLocal",
-                        column: x => x.localIdLocal,
-                        principalTable: "Local",
+                        name: "FK_Usuario_Locales_LocalesIdLocal",
+                        column: x => x.LocalesIdLocal,
+                        principalTable: "Locales",
                         principalColumn: "IdLocal",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Usuario_TipoSocio_TipoSocio",
-                        column: x => x.TipoSocio,
+                        name: "FK_Usuario_TipoSocio_tipoSocioIdTipoSocio",
+                        column: x => x.tipoSocioIdTipoSocio,
                         principalTable: "TipoSocio",
                         principalColumn: "IdTipoSocio");
                 });
@@ -216,24 +247,29 @@ namespace ObligatorioMVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ejercicio_tipoMaquinaidTipoMaquina",
+                name: "IX_DisponibilidadMaquinas_IdMaquina",
+                table: "DisponibilidadMaquinas",
+                column: "IdMaquina");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ejercicio_IdTipoMaquina",
                 table: "Ejercicio",
-                column: "tipoMaquinaidTipoMaquina");
+                column: "IdTipoMaquina");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Local_idResponsableLocal",
-                table: "Local",
-                column: "idResponsableLocal");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Maquina_IdLocal",
-                table: "Maquina",
-                column: "IdLocal");
+                name: "IX_Locales_IdResponsableLocal",
+                table: "Locales",
+                column: "IdResponsableLocal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Maquina_IdTipoMaquina",
                 table: "Maquina",
                 column: "IdTipoMaquina");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Maquina_LocalesIdLocal",
+                table: "Maquina",
+                column: "LocalesIdLocal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rutina_tipoRutina",
@@ -251,39 +287,52 @@ namespace ObligatorioMVC.Migrations
                 column: "idRutina");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_localIdLocal",
+                name: "IX_Usuario_LocalesIdLocal",
                 table: "Usuario",
-                column: "localIdLocal");
+                column: "LocalesIdLocal");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_TipoSocio",
+                name: "IX_Usuario_tipoSocioIdTipoSocio",
                 table: "Usuario",
-                column: "TipoSocio");
+                column: "tipoSocioIdTipoSocio");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Local_Usuario_idResponsableLocal",
-                table: "Local",
-                column: "idResponsableLocal",
-                principalTable: "Usuario",
-                principalColumn: "IdUsuario",
+                name: "FK_DisponibilidadMaquinas_Maquina_IdMaquina",
+                table: "DisponibilidadMaquinas",
+                column: "IdMaquina",
+                principalTable: "Maquina",
+                principalColumn: "IdMaquina",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Locales_Usuario_IdResponsableLocal",
+                table: "Locales",
+                column: "IdResponsableLocal",
+                principalTable: "Usuario",
+                principalColumn: "IdUsuario");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Local_Usuario_idResponsableLocal",
-                table: "Local");
+                name: "FK_Locales_Usuario_IdResponsableLocal",
+                table: "Locales");
 
             migrationBuilder.DropTable(
-                name: "Maquina");
+                name: "DisponibilidadMaquinas");
 
             migrationBuilder.DropTable(
                 name: "rutinaEjercicios");
 
             migrationBuilder.DropTable(
                 name: "SocioRutina");
+
+            migrationBuilder.DropTable(
+                name: "Disponibilidad");
+
+            migrationBuilder.DropTable(
+                name: "Maquina");
 
             migrationBuilder.DropTable(
                 name: "Ejercicio");
@@ -301,7 +350,7 @@ namespace ObligatorioMVC.Migrations
                 name: "Usuario");
 
             migrationBuilder.DropTable(
-                name: "Local");
+                name: "Locales");
 
             migrationBuilder.DropTable(
                 name: "TipoSocio");

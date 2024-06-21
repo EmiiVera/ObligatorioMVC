@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObligatorioMVC.Models
 {
-    public class Local
+    public class Locales
     {
         [Key]
         public int IdLocal { get; set; }
@@ -25,16 +25,16 @@ namespace ObligatorioMVC.Models
         public string? TelefonoLocal { get; set; }
 
         [Required]
-        [Display(Name = "Responsable")]
-        [ForeignKey("ResponsableLocal")]
-        public int idResponsableLocal { get; set; }
-
-        public ResponsableLocal? ResponsableLocal { get; set; }
-
+        [Display(Name = "Maquina")]
         [ForeignKey("Maquina")]
-        public int IdMaquina { get; set; }
+        public int? IdMaquina { get; set; }
 
         public List<Maquina>? Maquinas { get; set; }
+
+        [ForeignKey("ResponsableLocal")]
+        public int? IdResponsableLocal { get; set; }
+        [Display(Name = "Responsable")]
+        public ResponsableLocal? ResponsableLocal { get; set; }
 
     }
 }

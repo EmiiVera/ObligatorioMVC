@@ -6,9 +6,11 @@ namespace ObligatorioMVC.Models
     {
         [Key]
         public int IdUsuario {  get; set; }
+
         [Required]
         [Display(Name = "Nombre")]
         public string NombreUsuario { get; set; }
+
         [Required]
         [Display(Name = "Teléfono")]
         public string TelefonoUsuario { get; set; }

@@ -13,8 +13,9 @@ namespace ObligatorioMVC.Datos
         }
 
         //Modelos a crear
+        public DbSet<Disponibilidad> Disponibilidad { get; set; }
         public DbSet<Ejercicio> Ejercicio { get; set; }
-        public DbSet<Local> Local { get; set; }
+        public DbSet<Locales> Locales { get; set; }
         public DbSet<Maquina> Maquina { get; set; }
         public DbSet<ResponsableLocal> ResponsableLocal { get; set; }
         public DbSet<Rutina> Rutina { get; set; }
@@ -58,6 +59,7 @@ namespace ObligatorioMVC.Datos
                 .HasOne(up => up.Rutina)
                 .WithMany(up => up.socioRutinas)
                 .HasForeignKey(up => up.idRutina);
+
         }
     }
 

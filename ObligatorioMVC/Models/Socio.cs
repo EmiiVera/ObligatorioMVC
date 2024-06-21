@@ -10,10 +10,11 @@ namespace ObligatorioMVC.Models
         public int IdLocal { get; set; }
 
         [Required]
-        public Local? local { get; set; }
+        public Locales? Locales { get; set; }
 
         [Display(Name = "Tipo de Socio")]
         [ForeignKey("TipoSocio")]
+        public int IdTipoSocio { get; set; }
         public TipoSocio? tipoSocio { get; set; }
 
         public ICollection<SocioRutina>? socioRutinas { get; set; }

@@ -16,27 +16,22 @@ namespace ObligatorioMVC.Models
         [Display(Name = "Precio")]
         public double PrecioCompra { get; set; }
 
-        [Required]
-        public string Disponibilidad { get; set; }
+        [Display(Name = "Disponibilidad")]
+        [ForeignKey("Disponibilidad")]
+        public int IdDisponible { get; set; }
+        public Disponibilidad? Disponibilidad { get; set; }
 
-        [Required]
-        [Display(Name = "Local")]
-        [ForeignKey("Local")]
-        public int IdLocal { get; set; }
+        //[Required] [Display(Name = "Local")] [ForeignKey("Local")] public int? IdLocal { get; set; } //public Local? Local { get; set; }
 
-        public Local? Local { get; set; }
-
-        [Required]
         [Display(Name = "Máquina")]
         [ForeignKey("TipoMaquina")]
-        public int IdTipoMaquina { get; set; }
+        public int? IdTipoMaquina { get; set; }
 
-        [Required]
         public TipoMaquina? TipoMaquina { get; set; }
 
         [Required]
-        [Display(Name = "Vida útil")]
-        public DateTime VidaUtil { get; set; }
+        [Display(Name = "Vida Útil(años)")]
+        public int VidaUtil { get; set; }
 
         public void VidaUtilRestante()
         {

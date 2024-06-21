@@ -54,7 +54,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUsuario,NombreUsuario,TelefonoUsuario")] ResponsableLocal responsableLocal)
+        public async Task<IActionResult> Create([Bind("Sueldo,IdUsuario,NombreUsuario,TelefonoUsuario")] ResponsableLocal responsableLocal)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,NombreUsuario,TelefonoUsuario")] ResponsableLocal responsableLocal)
+        public async Task<IActionResult> Edit(int id, [Bind("Sueldo,IdUsuario,NombreUsuario,TelefonoUsuario")] ResponsableLocal responsableLocal)
         {
             if (id != responsableLocal.IdUsuario)
             {

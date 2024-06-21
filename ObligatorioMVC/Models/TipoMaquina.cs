@@ -5,10 +5,13 @@ namespace ObligatorioMVC.Models
     public class TipoMaquina
     {
         [Key]
-        public int idTipoMaquina { get; set; }
+        public int IdTipoMaquina { get; set; }
 
         [Required]
         [Display(Name = "Tipo de Máquina")]
-        public string nombreTipoMaquina { get; set; }
+        public string NombreTipoMaquina { get; set; }
+
+        [Display(Name = "Descripción")]
+        public string? Descripcion { get; set; }
     }
 }
