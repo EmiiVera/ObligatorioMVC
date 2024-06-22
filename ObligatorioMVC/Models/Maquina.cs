@@ -38,9 +38,12 @@ namespace ObligatorioMVC.Models
         [Display(Name = "Vida Útil(años)")]
         public int VidaUtil { get; set; }
 
-        public void VidaUtilRestante()
+        public int VidaUtilRestante()
         {
-            DateTime dateTime = DateTime.Now;
+            int anio = FechaCompra.Year;
+            int vidaRestante = anio + VidaUtil;
+            return VidaUtil;
+
 
             //"Calcular vida";
         }

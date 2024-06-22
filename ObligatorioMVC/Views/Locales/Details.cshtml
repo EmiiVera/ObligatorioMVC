@@ -42,6 +42,28 @@
         </dd>
     </dl>
 </div>
+
+<h5>Lista de Máquinas</h5>
+
+@foreach(var maq in Model.Maquina)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelo => maq.TipoMaquina.NombreTipoMaquina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelo => maq.VidaUtil): 
+                    @Html.DisplayFor(modelo => maq.VidaUtil) años
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+}
+
+
 <div>
 
     <a asp-action="ListaDeMaquinas" asp-route-id="@Model?.IdLocal">Lista De Máquinas</a> |

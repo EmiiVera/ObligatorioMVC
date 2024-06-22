@@ -57,12 +57,19 @@ namespace ObligatorioMVC.Controllers
 
             var locales = await _context.Locales
                 .Include(l => l.ResponsableLocal)
-                .Include(l => l.Maquina)
+                .Include(l => l.Maquina).ThenInclude(l => l.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.IdLocal == id);
+
             if (locales == null)
             {
                 return NotFound();
             }
+
+            var maquinas = _context.Maquina.Include(m => m.TipoMaquina)
+               .Include(m => m.Locales).Where(m => m.IdLocal == id).ToList();
+
+            ViewData["Maquinas"] = new SelectList(maquinas, "IdMaquina");
+            ViewBag.TipoMaquina = new SelectList(_context.TipoMaquina, "NombreTipoMaquina");
 
             return View(locales);
         }
