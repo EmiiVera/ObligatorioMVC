@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Maquinas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Maquina.Include(m => m.Disponibilidad).Include(m => m.TipoMaquina);
+            var applicationDbContext = _context.Maquina.Include(m => m.Disponibilidad).Include(m => m.Locales).Include(m => m.TipoMaquina);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace ObligatorioMVC.Controllers
 
             var maquina = await _context.Maquina
                 .Include(m => m.Disponibilidad)
+                .Include(m => m.Locales)
                 .Include(m => m.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.IdMaquina == id);
             if (maquina == null)
@@ -50,6 +51,7 @@ namespace ObligatorioMVC.Controllers
         public IActionResult Create()
         {
             ViewData["IdDisponible"] = new SelectList(_context.Disponibilidad, "Id", "Nombre");
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "IdLocal", "Ciudad");
             ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "IdTipoMaquina", "NombreTipoMaquina");
             return View();
         }
@@ -59,7 +61,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdMaquina,FechaCompra,PrecioCompra,IdDisponible,IdTipoMaquina,VidaUtil")] Maquina maquina)
+        public async Task<IActionResult> Create([Bind("IdMaquina,FechaCompra,PrecioCompra,IdDisponible,IdTipoMaquina,IdLocal,VidaUtil")] Maquina maquina)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +70,7 @@ namespace ObligatorioMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDisponible"] = new SelectList(_context.Disponibilidad, "Id", "Nombre", maquina.IdDisponible);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "IdLocal", "Ciudad", maquina.IdLocal);
             ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "IdTipoMaquina", "NombreTipoMaquina", maquina.IdTipoMaquina);
             return View(maquina);
         }
@@ -86,6 +89,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
             ViewData["IdDisponible"] = new SelectList(_context.Disponibilidad, "Id", "Nombre", maquina.IdDisponible);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "IdLocal", "Ciudad", maquina.IdLocal);
             ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "IdTipoMaquina", "NombreTipoMaquina", maquina.IdTipoMaquina);
             return View(maquina);
         }
@@ -95,7 +99,7 @@ namespace ObligatorioMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdMaquina,FechaCompra,PrecioCompra,IdDisponible,IdTipoMaquina,VidaUtil")] Maquina maquina)
+        public async Task<IActionResult> Edit(int id, [Bind("IdMaquina,FechaCompra,PrecioCompra,IdDisponible,IdTipoMaquina,IdLocal,VidaUtil")] Maquina maquina)
         {
             if (id != maquina.IdMaquina)
             {
@@ -123,6 +127,7 @@ namespace ObligatorioMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDisponible"] = new SelectList(_context.Disponibilidad, "Id", "Nombre", maquina.IdDisponible);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "IdLocal", "Ciudad", maquina.IdLocal);
             ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "IdTipoMaquina", "NombreTipoMaquina", maquina.IdTipoMaquina);
             return View(maquina);
         }
@@ -137,6 +142,7 @@ namespace ObligatorioMVC.Controllers
 
             var maquina = await _context.Maquina
                 .Include(m => m.Disponibilidad)
+                .Include(m => m.Locales)
                 .Include(m => m.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.IdMaquina == id);
             if (maquina == null)

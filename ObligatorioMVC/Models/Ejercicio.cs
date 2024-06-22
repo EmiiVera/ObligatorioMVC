@@ -10,11 +10,11 @@ public class Ejercicio
     [Required]
     [Display(Name = "Máquina")]
     [ForeignKey("TipoMaquina")]
-    public int IdTipoMaquina { get; set; }
+    public int? IdTipoMaquina { get; set; }
 
     public TipoMaquina? TipoMaquina { get; set; }
 
-    public ICollection<RutinaEjercicio> rutinaEjercicios { get; set; }
+    public ICollection<RutinaEjercicio>? rutinaEjercicios { get; set; }
 
 
 }

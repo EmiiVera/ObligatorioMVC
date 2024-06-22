@@ -29,6 +29,11 @@ namespace ObligatorioMVC.Models
 
         public TipoMaquina? TipoMaquina { get; set; }
 
+        [Display(Name = "Local")]
+        [ForeignKey("Locales")]
+        public int? IdLocal {  get; set; }
+        public Locales? Locales { get; set; }
+
         [Required]
         [Display(Name = "Vida Útil(años)")]
         public int VidaUtil { get; set; }

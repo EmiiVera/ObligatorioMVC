@@ -8,6 +8,8 @@ namespace ObligatorioMVC.Models
     {
         [Required]
         public double Sueldo { get; set; }
+        public Locales? Locales { get; set; }
+
         public override string ToString()
         {
             throw new NotImplementedException();

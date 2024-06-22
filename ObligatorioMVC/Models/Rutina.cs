@@ -9,10 +9,11 @@ namespace ObligatorioMVC.Models
         public int IdRutina { get; set; }
 
         [Required]
-        [Display(Name = "Tipo de Rutina")]
-        public string? Descripcion { get; set; }
+        [Display(Name = "Rutina")]
+        public string? DescripcionRutina { get; set; }
 
-        public double? Promedio { get; set; }
+        [Display(Name = "Calificación")]
+        public int Calificacion { get; set; }
 
         [Display(Name = "Tipo de Rutina")]
         [ForeignKey("TipoRutina")]

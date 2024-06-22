@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObligatorioMVC.Datos;
 
@@ -11,9 +12,11 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622034527_Obligatorio_mvc1")]
+    partial class Obligatorio_mvc1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,15 +297,10 @@ namespace ObligatorioMVC.Migrations
                     b.Property<int>("LocalesIdLocal")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoRutinaIdTipoRutina")
-                        .HasColumnType("int");
-
                     b.Property<int?>("tipoSocioIdTipoSocio")
                         .HasColumnType("int");
 
                     b.HasIndex("LocalesIdLocal");
-
-                    b.HasIndex("TipoRutinaIdTipoRutina");
 
                     b.HasIndex("tipoSocioIdTipoSocio");
 
@@ -404,14 +402,10 @@ namespace ObligatorioMVC.Migrations
             modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.Locales", "Locales")
-                        .WithMany("Socios")
+                        .WithMany()
                         .HasForeignKey("LocalesIdLocal")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ObligatorioMVC.Models.TipoRutina", null)
-                        .WithMany("Socios")
-                        .HasForeignKey("TipoRutinaIdTipoRutina");
 
                     b.HasOne("ObligatorioMVC.Models.TipoSocio", "tipoSocio")
                         .WithMany()
@@ -430,8 +424,6 @@ namespace ObligatorioMVC.Migrations
             modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
                 {
                     b.Navigation("Maquina");
-
-                    b.Navigation("Socios");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
@@ -439,11 +431,6 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("rutinaEjercicios");
 
                     b.Navigation("socioRutinas");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.TipoRutina", b =>
-                {
-                    b.Navigation("Socios");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.ResponsableLocal", b =>

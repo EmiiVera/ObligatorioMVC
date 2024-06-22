@@ -24,16 +24,13 @@ namespace ObligatorioMVC.Models
         [Display(Name = "Teléfono")]
         public string? TelefonoLocal { get; set; }
 
-        [Required]
-        [Display(Name = "Maquina")]
-        [ForeignKey("Maquina")]
-        public int? IdMaquina { get; set; }
+        public ICollection<Maquina>? Maquina { get; set; }
 
-        public List<Maquina>? Maquinas { get; set; }
+        public ICollection<Socio>? Socios { get; set; }
 
         [ForeignKey("ResponsableLocal")]
         public int? IdResponsableLocal { get; set; }
-        [Display(Name = "Responsable")]
+        //[Display(Name = "Responsable")]
         public ResponsableLocal? ResponsableLocal { get; set; }
 
     }

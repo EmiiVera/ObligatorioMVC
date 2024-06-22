@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ObligatorioMVC.Models.Rutina>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionRutina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoRutina)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionRutina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoRutina.NombreTipoRutina)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdRutina">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdRutina">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdRutina">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

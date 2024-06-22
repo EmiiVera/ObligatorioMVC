@@ -60,6 +60,19 @@ namespace ObligatorioMVC.Datos
                 .WithMany(up => up.socioRutinas)
                 .HasForeignKey(up => up.idRutina);
 
+            //Configuracion para relacion N a 1
+            modelBuilder.Entity<Maquina>()
+                .HasOne(up => up.Locales)
+                .WithMany(up => up.Maquina)
+                .HasForeignKey(up => up.IdLocal);
+
+            //Relaciones 1 a 1
+            //Local - ResponsableLocal
+            modelBuilder.Entity<ResponsableLocal>()
+                .HasOne(up => up.Locales)
+                .WithOne(up => up.ResponsableLocal)
+                .HasForeignKey<Locales>(up => up.IdResponsableLocal);
+
         }
     }
 

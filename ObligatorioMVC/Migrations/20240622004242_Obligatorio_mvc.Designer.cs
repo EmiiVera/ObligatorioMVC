@@ -12,7 +12,7 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240621010358_Obligatorio_mvc")]
+    [Migration("20240622004242_Obligatorio_mvc")]
     partial class Obligatorio_mvc
     {
         /// <inheritdoc />
@@ -40,21 +40,6 @@ namespace ObligatorioMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Disponibilidad");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.DisponibilidadMaquina", b =>
-                {
-                    b.Property<int>("IdDisponibilidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdMaquina")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdDisponibilidad", "IdMaquina");
-
-                    b.HasIndex("IdMaquina");
-
-                    b.ToTable("DisponibilidadMaquinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
@@ -91,10 +76,6 @@ namespace ObligatorioMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdMaquina")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdResponsableLocal")
                         .HasColumnType("int");
 
@@ -109,7 +90,9 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("IdLocal");
 
-                    b.HasIndex("IdResponsableLocal");
+                    b.HasIndex("IdResponsableLocal")
+                        .IsUnique()
+                        .HasFilter("[IdResponsableLocal] IS NOT NULL");
 
                     b.ToTable("Locales");
                 });
@@ -125,10 +108,13 @@ namespace ObligatorioMVC.Migrations
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdTipoMaquina")
+                    b.Property<int>("IdDisponible")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocalesIdLocal")
+                    b.Property<int?>("IdLocal")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdTipoMaquina")
                         .HasColumnType("int");
 
                     b.Property<double>("PrecioCompra")
@@ -139,9 +125,11 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("IdMaquina");
 
-                    b.HasIndex("IdTipoMaquina");
+                    b.HasIndex("IdDisponible");
 
-                    b.HasIndex("LocalesIdLocal");
+                    b.HasIndex("IdLocal");
+
+                    b.HasIndex("IdTipoMaquina");
 
                     b.ToTable("Maquina");
                 });
@@ -318,25 +306,6 @@ namespace ObligatorioMVC.Migrations
                     b.HasDiscriminator().HasValue("Socio");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.DisponibilidadMaquina", b =>
-                {
-                    b.HasOne("ObligatorioMVC.Models.Disponibilidad", "Disponibilidad")
-                        .WithMany("DisponibilidadMaquinas")
-                        .HasForeignKey("IdDisponibilidad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ObligatorioMVC.Models.Maquina", "Maquina")
-                        .WithMany("DisponibilidadMaquinas")
-                        .HasForeignKey("IdMaquina")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Disponibilidad");
-
-                    b.Navigation("Maquina");
-                });
-
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
@@ -351,21 +320,31 @@ namespace ObligatorioMVC.Migrations
             modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.ResponsableLocal", "ResponsableLocal")
-                        .WithMany()
-                        .HasForeignKey("IdResponsableLocal");
+                        .WithOne("Locales")
+                        .HasForeignKey("ObligatorioMVC.Models.Locales", "IdResponsableLocal");
 
                     b.Navigation("ResponsableLocal");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
                 {
+                    b.HasOne("ObligatorioMVC.Models.Disponibilidad", "Disponibilidad")
+                        .WithMany()
+                        .HasForeignKey("IdDisponible")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ObligatorioMVC.Models.Locales", "Locales")
+                        .WithMany("Maquina")
+                        .HasForeignKey("IdLocal");
+
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
                         .WithMany()
                         .HasForeignKey("IdTipoMaquina");
 
-                    b.HasOne("ObligatorioMVC.Models.Locales", null)
-                        .WithMany("Maquinas")
-                        .HasForeignKey("LocalesIdLocal");
+                    b.Navigation("Disponibilidad");
+
+                    b.Navigation("Locales");
 
                     b.Navigation("TipoMaquina");
                 });
@@ -436,11 +415,6 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("tipoSocio");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Disponibilidad", b =>
-                {
-                    b.Navigation("DisponibilidadMaquinas");
-                });
-
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
                     b.Navigation("rutinaEjercicios");
@@ -448,12 +422,7 @@ namespace ObligatorioMVC.Migrations
 
             modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
                 {
-                    b.Navigation("Maquinas");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
-                {
-                    b.Navigation("DisponibilidadMaquinas");
+                    b.Navigation("Maquina");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
@@ -461,6 +430,11 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("rutinaEjercicios");
 
                     b.Navigation("socioRutinas");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.ResponsableLocal", b =>
+                {
+                    b.Navigation("Locales");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
