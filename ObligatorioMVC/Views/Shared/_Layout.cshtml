@@ -34,15 +34,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Rutinas" asp-action="Index">Rutinas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ResponsableLocals" asp-action="Index">Responsable del Local</a>
+
+
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Otros
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="TipoMaquinas" asp-action="Index">Tipos de Máquinas</a>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Disponibilidads" asp-action="Index">Disponibilidad</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ResponsableLocals" asp-action="Index">Responsable del Local</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoMaquinas" asp-action="Index">Tipos de Máquinas</a>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Disponibilidads" asp-action="Index">Disponibilidad</a>
-                        </li>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -56,7 +66,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ObligatorioMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - ObligatorioMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
