@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using ObligatorioMVC.Datos;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Coneccion SQL
+builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
+opciones.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSQL"))
+);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
