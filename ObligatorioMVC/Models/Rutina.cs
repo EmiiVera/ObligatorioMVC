@@ -6,7 +6,7 @@ namespace ObligatorioMVC.Models
     public class Rutina
     {
         [Key]
-        public int IdRutina { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Rutina")]
@@ -17,11 +17,15 @@ namespace ObligatorioMVC.Models
 
         [Display(Name = "Tipo de Rutina")]
         [ForeignKey("TipoRutina")]
-        public int tipoRutina { get; set; }
+        public int IdTipoRutina { get; set; }
         public TipoRutina? TipoRutina { get; set; }
 
-        public ICollection<SocioRutina>? socioRutinas { get; set; }
+        public ICollection<SocioRutina>? SocioRutinas { get; set; }
 
-        public ICollection<RutinaEjercicio>? rutinaEjercicios { get; set; }
+        public ICollection<RutinaEjercicio>? RutinaEjercicios { get; set; }
+
+        [Display(Name = "Ejercicios")]
+        [NotMapped]
+        public List<int> EjercicioSeleccionados { get; set; }
     }
 }

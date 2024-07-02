@@ -9,19 +9,13 @@ namespace ObligatorioMVC.Models
         [ForeignKey("Local")]
         public int IdLocal { get; set; }
 
-        [Required]
-        public Locales? Locales { get; set; }
+        public Local? Local { get; set; }
 
         [Display(Name = "Tipo de Socio")]
         [ForeignKey("TipoSocio")]
         public int IdTipoSocio { get; set; }
-        public TipoSocio? tipoSocio { get; set; }
+        public TipoSocio? TipoSocio { get; set; }
 
-        public ICollection<SocioRutina>? socioRutinas { get; set; }
-
-        public override string ToString()
-        {
-            throw new NotImplementedException();
-        }
+        public ICollection<SocioRutina>? SocioRutinas { get; set; }
     }
 }

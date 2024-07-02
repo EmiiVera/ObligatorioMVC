@@ -22,8 +22,13 @@ namespace ObligatorioMVC.Controllers
         // GET: Rutinas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Rutina.Include(r => r.TipoRutina);
-            return View(await applicationDbContext.ToListAsync());
+            var rutinas = await _context.Rutina
+                                        .Include(r => r.TipoRutina)
+                                        .Include(r => r.RutinaEjercicios)
+                                            .ThenInclude(re => re.Ejercicio)
+                                        .ToListAsync();
+
+            return View(rutinas);
         }
 
         // GET: Rutinas/Details/5
@@ -36,7 +41,7 @@ namespace ObligatorioMVC.Controllers
 
             var rutina = await _context.Rutina
                 .Include(r => r.TipoRutina)
-                .FirstOrDefaultAsync(m => m.IdRutina == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rutina == null)
             {
                 return NotFound();
@@ -48,24 +53,41 @@ namespace ObligatorioMVC.Controllers
         // GET: Rutinas/Create
         public IActionResult Create()
         {
-            ViewData["tipoRutina"] = new SelectList(_context.TipoRutina, "IdTipoRutina", "NombreTipoRutina");
+            ViewData["IdTipoRutina"] = new SelectList(_context.TipoRutina, "Id", "Nombre");
+            ViewData["Ejercicios"] = new MultiSelectList(_context.Ejercicio, "Id", "Nombre");
             return View();
         }
 
+
         // POST: Rutinas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRutina,DescripcionRutina,Calificacion,tipoRutina")] Rutina rutina)
+        public async Task<IActionResult> Create([Bind("DescripcionRutina,Calificacion,IdTipoRutina,EjercicioSeleccionados")] Rutina rutina)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(rutina);
                 await _context.SaveChangesAsync();
+
+                if (rutina.EjercicioSeleccionados != null && rutina.EjercicioSeleccionados.Any())
+                {
+                    foreach (var ejercicioId in rutina.EjercicioSeleccionados)
+                    {
+                        var rutinaEjercicio = new RutinaEjercicio
+                        {
+                            IdRutina = rutina.Id,
+                            IdEjercicio = ejercicioId
+                        };
+                        _context.RutinaEjercicios.Add(rutinaEjercicio);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["tipoRutina"] = new SelectList(_context.TipoRutina, "IdTipoRutina", "NombreTipoRutina", rutina.tipoRutina);
+
+            ViewData["IdTipoRutina"] = new SelectList(_context.TipoRutina, "Id", "Nombre", rutina.IdTipoRutina);
+            ViewData["Ejercicios"] = new MultiSelectList(_context.Ejercicio, "Id", "Nombre", rutina.EjercicioSeleccionados);
             return View(rutina);
         }
 
@@ -77,23 +99,24 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var rutina = await _context.Rutina.FindAsync(id);
+            var rutina = await _context.Rutina.Include(r => r.RutinaEjercicios).FirstOrDefaultAsync(m => m.Id == id);
             if (rutina == null)
             {
                 return NotFound();
             }
-            ViewData["tipoRutina"] = new SelectList(_context.TipoRutina, "IdTipoRutina", "NombreTipoRutina", rutina.tipoRutina);
+
+            rutina.EjercicioSeleccionados = rutina.RutinaEjercicios.Select(re => re.IdEjercicio).ToList();
+            ViewData["IdTipoRutina"] = new SelectList(_context.TipoRutina, "Id", "Nombre", rutina.IdTipoRutina);
+            ViewData["Ejercicios"] = new MultiSelectList(_context.Ejercicio, "Id", "Nombre", rutina.EjercicioSeleccionados);
             return View(rutina);
         }
 
         // POST: Rutinas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdRutina,DescripcionRutina,Calificacion,tipoRutina")] Rutina rutina)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DescripcionRutina,Calificacion,IdTipoRutina,EjercicioSeleccionados")] Rutina rutina)
         {
-            if (id != rutina.IdRutina)
+            if (id != rutina.Id)
             {
                 return NotFound();
             }
@@ -104,10 +127,25 @@ namespace ObligatorioMVC.Controllers
                 {
                     _context.Update(rutina);
                     await _context.SaveChangesAsync();
+
+                    var existingEjercicios = _context.RutinaEjercicios.Where(re => re.IdRutina == rutina.Id).ToList();
+                    _context.RutinaEjercicios.RemoveRange(existingEjercicios);
+
+                    foreach (var ejercicioId in rutina.EjercicioSeleccionados)
+                    {
+                        var rutinaEjercicio = new RutinaEjercicio
+                        {
+                            IdRutina = rutina.Id,
+                            IdEjercicio = ejercicioId
+                        };
+                        _context.RutinaEjercicios.Add(rutinaEjercicio);
+                    }
+
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RutinaExists(rutina.IdRutina))
+                    if (!RutinaExists(rutina.Id))
                     {
                         return NotFound();
                     }
@@ -118,9 +156,11 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["tipoRutina"] = new SelectList(_context.TipoRutina, "IdTipoRutina", "NombreTipoRutina", rutina.tipoRutina);
+            ViewData["IdTipoRutina"] = new SelectList(_context.TipoRutina, "Id", "Nombre", rutina.IdTipoRutina);
+            ViewData["Ejercicios"] = new MultiSelectList(_context.Ejercicio, "Id", "Nombre", rutina.EjercicioSeleccionados);
             return View(rutina);
         }
+
 
         // GET: Rutinas/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -132,7 +172,7 @@ namespace ObligatorioMVC.Controllers
 
             var rutina = await _context.Rutina
                 .Include(r => r.TipoRutina)
-                .FirstOrDefaultAsync(m => m.IdRutina == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rutina == null)
             {
                 return NotFound();
@@ -158,7 +198,7 @@ namespace ObligatorioMVC.Controllers
 
         private bool RutinaExists(int id)
         {
-            return _context.Rutina.Any(e => e.IdRutina == id);
+            return _context.Rutina.Any(e => e.Id == id);
         }
     }
 }

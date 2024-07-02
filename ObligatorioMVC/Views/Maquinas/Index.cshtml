@@ -4,62 +4,63 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Maquinas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a> 
+    <a asp-action="Create">Ingresar</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FechaCompra)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FechaCompra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioCompra)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioCompra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Disponibilidad)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Disponibilidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoMaquina)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TipoMaquina.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Locales)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Local.NombreLocal)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VidaUtil)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().VidaUtil)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Disponibilidad.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMaquina.NombreTipoMaquina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Locales.Ciudad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VidaUtil)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdMaquina">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdMaquina">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdMaquina">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FechaCompra.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioCompra)
+                </td>
+                <td>
+                    @(item.Disponibilidad ? "Disponible" : "No disponible")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Local.NombreLocal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VidaUtil) años <!-- Se le agrega la palabra años al final-->
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

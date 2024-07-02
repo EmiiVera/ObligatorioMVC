@@ -6,7 +6,7 @@ namespace ObligatorioMVC.Models
     public class Maquina
     {
         [Key]
-        public int IdMaquina { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Fecha de la compra")]
@@ -15,11 +15,7 @@ namespace ObligatorioMVC.Models
         [Required]
         [Display(Name = "Precio")]
         public double PrecioCompra { get; set; }
-
-        [Display(Name = "Disponibilidad")]
-        [ForeignKey("Disponibilidad")]
-        public int IdDisponible { get; set; }
-        public Disponibilidad? Disponibilidad { get; set; }
+        public bool Disponibilidad { get; set; }
 
         //[Required] [Display(Name = "Local")] [ForeignKey("Local")] public int? IdLocal { get; set; } //public Local? Local { get; set; }
 
@@ -30,9 +26,9 @@ namespace ObligatorioMVC.Models
         public TipoMaquina? TipoMaquina { get; set; }
 
         [Display(Name = "Local")]
-        [ForeignKey("Locales")]
-        public int? IdLocal {  get; set; }
-        public Locales? Locales { get; set; }
+        [ForeignKey("Local")]
+        public int IdLocal {  get; set; }
+        public Local? Local { get; set; }
 
         [Required]
         [Display(Name = "Vida Útil(años)")]

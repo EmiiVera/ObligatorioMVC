@@ -1,17 +1,16 @@
 ﻿@model ObligatorioMVC.Models.Rutina
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Rutina";
 }
 
-<h1>Create</h1>
+<h1>Create Rutina</h1>
 
 <h4>Rutina</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Create" method="post">
             <div class="form-group">
                 <label asp-for="DescripcionRutina" class="control-label"></label>
                 <input asp-for="DescripcionRutina" class="form-control" />
@@ -23,20 +22,27 @@
                 <span asp-validation-for="Calificacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="tipoRutina" class="control-label"></label>
-                <select asp-for="tipoRutina" class ="form-control" asp-items="ViewBag.tipoRutina"></select>
+                <label asp-for="IdTipoRutina" class="control-label"></label>
+                <select asp-for="IdTipoRutina" class="form-control" asp-items="ViewBag.IdTipoRutina"></select>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="EjercicioSeleccionados" class="control-label"></label>
+                <select asp-for="EjercicioSeleccionados" class="form-control" asp-items="ViewBag.Ejercicios" multiple="multiple"></select>
+                <span asp-validation-for="EjercicioSeleccionados" class="text-danger"></span>
             </div>
+
+            <button type="submit" class="btn btn-primary">Crear Rutina</button>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a la lista</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

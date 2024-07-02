@@ -5,17 +5,15 @@ namespace ObligatorioMVC.Models
     public abstract class Usuario
     {
         [Key]
-        public int IdUsuario {  get; set; }
+        public int Id {  get; set; }
 
         [Required]
         [Display(Name = "Nombre")]
-        public string NombreUsuario { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
         [Display(Name = "Teléfono")]
-        public string TelefonoUsuario { get; set; }
-
-        public abstract string ToString();
+        public string Telefono { get; set; }
         
     }
 }

@@ -14,17 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FechaCompra" class="control-label"></label>
-                <input asp-for="FechaCompra" class="form-control" />
+                <input asp-for="FechaCompra" class="form-control" type="date" />
                 <span asp-validation-for="FechaCompra" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrecioCompra" class="control-label"></label>
                 <input asp-for="PrecioCompra" class="form-control" />
                 <span asp-validation-for="PrecioCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdDisponible" class="control-label"></label>
-                <select asp-for="IdDisponible" class ="form-control" asp-items="ViewBag.IdDisponible"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IdTipoMaquina" class="control-label"></label>
@@ -40,6 +36,13 @@
                 <span asp-validation-for="VidaUtil" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="form-check">
+                    <input asp-for="Disponibilidad" class="form-check-input" type="checkbox" />
+                    <label asp-for="Disponibilidad" class="form-check-label"></label>
+                </div>
+                <span asp-validation-for="Disponibilidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -47,7 +50,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a la lista</a>
 </div>
 
 @section Scripts {
