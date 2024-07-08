@@ -1,0 +1,107 @@
+﻿@model ObligatorioMVC.Models.Socio
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1 class="text-light">Crear</h1>
+
+<h4 class="text-light">Socio</h4>
+<hr class="bg-light" />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLocal" class="control-label text-light"></label>
+                <select asp-for="IdLocal" class="form-control">
+                    @foreach (var local in ViewBag.IdLocal as SelectList)
+                    {
+                        <option value="@local.Value">@local.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoSocio" class="control-label text-light"></label>
+                <select asp-for="IdTipoSocio" class="form-control">
+                    @foreach (var tipoSocio in ViewBag.IdTipoSocio as SelectList)
+                    {
+                        <option value="@tipoSocio.Value">@tipoSocio.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label text-light"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label text-light"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .form-control {
+        background-color: #444;
+        color: #ddd;
+        border-color: #555;
+    }
+
+        .form-control:focus {
+            background-color: #555;
+            color: #fff;
+            border-color: #666;
+        }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+
+    hr.bg-light {
+        border-top: 1px solid #fff;
+    }
+</style>

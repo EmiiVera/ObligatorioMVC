@@ -1,0 +1,81 @@
+﻿@model ObligatorioMVC.Models.Responsable
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles del Responsable</h1>
+
+<div>
+    <h4>Responsable</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sueldo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sueldo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #333;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #e0a800;
+            color: #333;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .col-sm-2, .col-sm-10 {
+        padding-bottom: 5px;
+    }
+
+    a {
+        color: #fff;
+    }
+</style>

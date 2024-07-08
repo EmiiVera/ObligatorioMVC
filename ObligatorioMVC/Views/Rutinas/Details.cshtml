@@ -1,36 +1,81 @@
 ﻿@model ObligatorioMVC.Models.Rutina
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
-<h1>Details</h1>
+<h1 class="text-light">Detalles</h1>
 
 <div>
-    <h4>Rutina</h4>
+    <h4 class="text-light">Rutina</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DescripcionRutina)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DescripcionRutina)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Calificacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Calificacion)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TipoRutina)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoRutina.NombreTipoRutina)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoRutina.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            Calificación Promedio
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var calificaciones = Model.SocioRutinas != null
+                ? Model.SocioRutinas
+                .Where(sr => sr.Calificacion.HasValue)
+                .Select(sr => sr.Calificacion.Value)
+                : Enumerable.Empty<int>();
+
+                double promedio = calificaciones.Any() ? calificaciones.Average() : 0;
+            }
+            <span>@promedio.ToString("0.##")</span>
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdRutina">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .btn-warning {
+        background-color: #ffa500;
+        border-color: #ffa500;
+    }
+
+        .btn-warning:hover {
+            background-color: #ff8c00;
+            border-color: #ff8c00;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+</style>

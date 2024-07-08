@@ -1,54 +1,116 @@
 ﻿@model ObligatorioMVC.Models.Maquina
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de Máquina";
 }
 
-<h1>Details</h1>
+<h1 class="text-light">Detalles de la Máquina</h1>
 
 <div>
     <h4>Maquina</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FechaCompra)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaCompra)
+        <dd class="col-sm-10">
+            @Model.FechaCompra.ToString("dd/MM/yyyy")
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PrecioCompra)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PrecioCompra)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Disponibilidad)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Disponibilidad.Nombre)
+        <dd class="col-sm-10">
+            @(Model.Disponibilidad ? "Disponible" : "No disponible")
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoMaquina)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoMaquina.Nombre)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoMaquina.NombreTipoMaquina)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoMaquina.Nombre)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Locales)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Local.NombreLocal)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locales.Ciudad)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Local.NombreLocal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.VidaUtil)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VidaUtil)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VidaUtil) años
+        </dd>
+        <dt class="col-sm-2">
+            Vida útil restante
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.VidaUtilRestante años
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdMaquina">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Atrás</a>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .table {
+        background-color: #444;
+    }
+
+    .table-dark th, .table-dark td {
+        background-color: #555;
+        border-color: #777;
+    }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+
+    .btn-danger {
+        background-color: #800000;
+        border-color: #990000;
+    }
+
+        .btn-danger:hover {
+            background-color: #990000;
+            border-color: #aa0000;
+        }
+</style>

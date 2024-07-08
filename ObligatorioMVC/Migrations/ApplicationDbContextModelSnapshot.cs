@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Disponibilidad", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,41 +30,27 @@ namespace ObligatorioMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("IdTipoMaquina")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Disponibilidad");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
-                {
-                    b.Property<int>("IdEjercicio")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEjercicio"));
-
-                    b.Property<int?>("IdTipoMaquina")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("IdEjercicio");
-
                     b.HasIndex("IdTipoMaquina");
 
-                    b.ToTable("Ejercicio");
+                    b.ToTable("Ejercicios");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
                 {
-                    b.Property<int>("IdLocal")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLocal"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ciudad")
                         .IsRequired()
@@ -86,7 +72,7 @@ namespace ObligatorioMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdLocal");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdResponsableLocal")
                         .IsUnique()
@@ -97,19 +83,19 @@ namespace ObligatorioMVC.Migrations
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
                 {
-                    b.Property<int>("IdMaquina")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMaquina"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Disponibilidad")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdDisponible")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdLocal")
+                    b.Property<int>("IdLocal")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdTipoMaquina")
@@ -121,40 +107,59 @@ namespace ObligatorioMVC.Migrations
                     b.Property<int>("VidaUtil")
                         .HasColumnType("int");
 
-                    b.HasKey("IdMaquina");
-
-                    b.HasIndex("IdDisponible");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdLocal");
 
                     b.HasIndex("IdTipoMaquina");
 
-                    b.ToTable("Maquina");
+                    b.ToTable("Maquinas");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.Responsable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Sueldo")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Responsables");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
                 {
-                    b.Property<int>("IdRutina")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRutina"));
-
-                    b.Property<int>("Calificacion")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DescripcionRutina")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("tipoRutina")
+                    b.Property<int>("IdTipoRutina")
                         .HasColumnType("int");
 
-                    b.HasKey("IdRutina");
+                    b.HasKey("Id");
 
-                    b.HasIndex("tipoRutina");
+                    b.HasIndex("IdTipoRutina");
 
-                    b.ToTable("Rutina");
+                    b.ToTable("Rutinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.RutinaEjercicio", b =>
@@ -169,121 +174,16 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdEjercicio");
 
-                    b.ToTable("rutinaEjercicios");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.SocioRutina", b =>
-                {
-                    b.Property<int>("idSocio")
-                        .HasColumnType("int");
-
-                    b.Property<int>("idRutina")
-                        .HasColumnType("int");
-
-                    b.HasKey("idSocio", "idRutina");
-
-                    b.HasIndex("idRutina");
-
-                    b.ToTable("SocioRutina");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.TipoMaquina", b =>
-                {
-                    b.Property<int>("IdTipoMaquina")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoMaquina"));
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreTipoMaquina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdTipoMaquina");
-
-                    b.ToTable("TipoMaquina");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.TipoRutina", b =>
-                {
-                    b.Property<int>("IdTipoRutina")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoRutina"));
-
-                    b.Property<string>("NombreTipoRutina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdTipoRutina");
-
-                    b.ToTable("TipoRutina");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.TipoSocio", b =>
-                {
-                    b.Property<int>("IdTipoSocio")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoSocio"));
-
-                    b.Property<string>("NombreTipoSocio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdTipoSocio");
-
-                    b.ToTable("TipoSocio");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.Usuario", b =>
-                {
-                    b.Property<int>("IdUsuario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
-                    b.Property<string>("NombreUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TelefonoUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdUsuario");
-
-                    b.ToTable("Usuario");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.ResponsableLocal", b =>
-                {
-                    b.HasBaseType("ObligatorioMVC.Models.Usuario");
-
-                    b.Property<double>("Sueldo")
-                        .HasColumnType("float");
-
-                    b.HasDiscriminator().HasValue("ResponsableLocal");
+                    b.ToTable("RutinaEjercicios");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
                 {
-                    b.HasBaseType("ObligatorioMVC.Models.Usuario");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("IdLocal")
                         .HasColumnType("int");
@@ -291,63 +191,313 @@ namespace ObligatorioMVC.Migrations
                     b.Property<int>("IdTipoSocio")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocalesIdLocal")
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdLocal");
+
+                    b.HasIndex("IdTipoSocio");
+
+                    b.ToTable("Socios");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.SocioRutina", b =>
+                {
+                    b.Property<int>("IdSocio")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoRutinaIdTipoRutina")
+                    b.Property<int>("IdRutina")
                         .HasColumnType("int");
 
-                    b.Property<int?>("tipoSocioIdTipoSocio")
+                    b.Property<int?>("Calificacion")
                         .HasColumnType("int");
 
-                    b.HasIndex("LocalesIdLocal");
+                    b.HasKey("IdSocio", "IdRutina");
 
-                    b.HasIndex("TipoRutinaIdTipoRutina");
+                    b.HasIndex("IdRutina");
 
-                    b.HasIndex("tipoSocioIdTipoSocio");
+                    b.ToTable("SocioRutinas");
+                });
 
-                    b.HasDiscriminator().HasValue("Socio");
+            modelBuilder.Entity("ObligatorioMVC.Models.TipoMaquina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoMaquinas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Para realizar el ejercicio no se necesita una maquina en especifico",
+                            Nombre = "Ninguna"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Permite caminar o correr en un lugar",
+                            Nombre = "Caminadora"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Permite movilidad sin tener que salir al exterior.",
+                            Nombre = "Bicicleta Estática"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descripcion = "Simula el movimiento de caminar, correr o subir escaleras.",
+                            Nombre = "Elíptica"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descripcion = "Entrenamiento de fuerza que se enfoca específicamente en los cuádriceps, los glúteos y los isquiotibiales.",
+                            Nombre = "Prensa de Pierna"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Descripcion = "Entrenamiento de fuerza que se utiliza para trabajar los músculos aductores de las piernas.",
+                            Nombre = "Máquina de Aductor"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Descripcion = "Fortalecimiento de los músculos del pecho, los hombros y los tríceps.",
+                            Nombre = "Press de Banca"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Descripcion = "Ejercicios de aislamiento para los isquiotibiales.",
+                            Nombre = "Máquina para Femorales"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Descripcion = "Sostiene el agarre y tira hacia abajo, cruzando los brazos en el proceso.",
+                            Nombre = "Poleas Cruzadas"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Descripcion = "Máquina de pectoral.",
+                            Nombre = "Peck Deck"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Descripcion = "Simula el movimiento de remar, trabaja varios grupos musculares.",
+                            Nombre = "Remo"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Descripcion = "Simula el subir escaleras, fortaleciendo las piernas y el sistema cardiovascular.",
+                            Nombre = "Escaladora"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Descripcion = "Aparato multifuncional para entrenamiento de fuerza guiado.",
+                            Nombre = "Máquina Smith"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Descripcion = "Permite ejercitar los músculos de los gemelos.",
+                            Nombre = "Máquina de Gemelos"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Descripcion = "Diseñada para trabajar y fortalecer los músculos abdominales.",
+                            Nombre = "Máquina de Abdominales"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Descripcion = "Permite realizar diferentes ejercicios en una misma máquina.",
+                            Nombre = "Multifuncional"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Descripcion = "Diseñada para trabajar y fortalecer los músculos glúteos.",
+                            Nombre = "Máquina de Glúteos"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Descripcion = "Fortalecimiento de los hombros y los tríceps.",
+                            Nombre = "Press Militar"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Descripcion = "Ejercicios específicos para trabajar los pectorales.",
+                            Nombre = "Máquina de Pecho"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Descripcion = "Aparato para fortalecer y definir los músculos del tríceps.",
+                            Nombre = "Máquina de Tríceps"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Descripcion = "Diseñada para trabajar y fortalecer los bíceps.",
+                            Nombre = "Máquina de Bíceps"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Descripcion = "Permite ejercitar la musculatura de la espalda.",
+                            Nombre = "Máquina de Espalda"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Descripcion = "Aparato para fortalecer los músculos de los hombros.",
+                            Nombre = "Máquina de Hombros"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Descripcion = "Entrenamiento de fuerza para los músculos abductores de las piernas.",
+                            Nombre = "Máquina de Abductores"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Descripcion = "Ejercita y fortalece los músculos de las pantorrillas.",
+                            Nombre = "Máquina de gemelos"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Descripcion = "Fortalece la musculatura de la zona dorsal y lumbar, corrige la postura corporal.",
+                            Nombre = "Máquina Dorsales"
+                        });
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.TipoRutina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoRutinas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Salud"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Competición amateur"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "Competición profesional"
+                        });
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.TipoSocio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoSocios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Estandar"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Premium"
+                        });
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
                         .WithMany()
-                        .HasForeignKey("IdTipoMaquina")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdTipoMaquina");
 
                     b.Navigation("TipoMaquina");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
                 {
-                    b.HasOne("ObligatorioMVC.Models.ResponsableLocal", "ResponsableLocal")
-                        .WithOne("Locales")
-                        .HasForeignKey("ObligatorioMVC.Models.Locales", "IdResponsableLocal");
+                    b.HasOne("ObligatorioMVC.Models.Responsable", "ResponsableLocal")
+                        .WithOne("Local")
+                        .HasForeignKey("ObligatorioMVC.Models.Local", "IdResponsableLocal");
 
                     b.Navigation("ResponsableLocal");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
                 {
-                    b.HasOne("ObligatorioMVC.Models.Disponibilidad", "Disponibilidad")
-                        .WithMany()
-                        .HasForeignKey("IdDisponible")
+                    b.HasOne("ObligatorioMVC.Models.Local", "Local")
+                        .WithMany("Maquina")
+                        .HasForeignKey("IdLocal")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ObligatorioMVC.Models.Locales", "Locales")
-                        .WithMany("Maquina")
-                        .HasForeignKey("IdLocal");
 
                     b.HasOne("ObligatorioMVC.Models.TipoMaquina", "TipoMaquina")
                         .WithMany()
                         .HasForeignKey("IdTipoMaquina");
 
-                    b.Navigation("Disponibilidad");
-
-                    b.Navigation("Locales");
+                    b.Navigation("Local");
 
                     b.Navigation("TipoMaquina");
                 });
@@ -355,8 +505,8 @@ namespace ObligatorioMVC.Migrations
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.TipoRutina", "TipoRutina")
-                        .WithMany()
-                        .HasForeignKey("tipoRutina")
+                        .WithMany("Rutinas")
+                        .HasForeignKey("IdTipoRutina")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -366,13 +516,13 @@ namespace ObligatorioMVC.Migrations
             modelBuilder.Entity("ObligatorioMVC.Models.RutinaEjercicio", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.Ejercicio", "Ejercicio")
-                        .WithMany("rutinaEjercicios")
+                        .WithMany("RutinaEjercicio")
                         .HasForeignKey("IdEjercicio")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ObligatorioMVC.Models.Rutina", "Rutina")
-                        .WithMany("rutinaEjercicios")
+                        .WithMany("RutinaEjercicios")
                         .HasForeignKey("IdRutina")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -382,17 +532,36 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("Rutina");
                 });
 
+            modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
+                {
+                    b.HasOne("ObligatorioMVC.Models.Local", "Local")
+                        .WithMany("Socios")
+                        .HasForeignKey("IdLocal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ObligatorioMVC.Models.TipoSocio", "TipoSocio")
+                        .WithMany("Socios")
+                        .HasForeignKey("IdTipoSocio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Local");
+
+                    b.Navigation("TipoSocio");
+                });
+
             modelBuilder.Entity("ObligatorioMVC.Models.SocioRutina", b =>
                 {
                     b.HasOne("ObligatorioMVC.Models.Rutina", "Rutina")
-                        .WithMany("socioRutinas")
-                        .HasForeignKey("idRutina")
+                        .WithMany("SocioRutinas")
+                        .HasForeignKey("IdRutina")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ObligatorioMVC.Models.Socio", "Socio")
-                        .WithMany("socioRutinas")
-                        .HasForeignKey("idSocio")
+                        .WithMany("SocioRutinas")
+                        .HasForeignKey("IdSocio")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -401,59 +570,43 @@ namespace ObligatorioMVC.Migrations
                     b.Navigation("Socio");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
-                {
-                    b.HasOne("ObligatorioMVC.Models.Locales", "Locales")
-                        .WithMany("Socios")
-                        .HasForeignKey("LocalesIdLocal")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ObligatorioMVC.Models.TipoRutina", null)
-                        .WithMany("Socios")
-                        .HasForeignKey("TipoRutinaIdTipoRutina");
-
-                    b.HasOne("ObligatorioMVC.Models.TipoSocio", "tipoSocio")
-                        .WithMany()
-                        .HasForeignKey("tipoSocioIdTipoSocio");
-
-                    b.Navigation("Locales");
-
-                    b.Navigation("tipoSocio");
-                });
-
             modelBuilder.Entity("ObligatorioMVC.Models.Ejercicio", b =>
                 {
-                    b.Navigation("rutinaEjercicios");
+                    b.Navigation("RutinaEjercicio");
                 });
 
-            modelBuilder.Entity("ObligatorioMVC.Models.Locales", b =>
+            modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
                 {
                     b.Navigation("Maquina");
 
                     b.Navigation("Socios");
                 });
 
+            modelBuilder.Entity("ObligatorioMVC.Models.Responsable", b =>
+                {
+                    b.Navigation("Local");
+                });
+
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
                 {
-                    b.Navigation("rutinaEjercicios");
+                    b.Navigation("RutinaEjercicios");
 
-                    b.Navigation("socioRutinas");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.TipoRutina", b =>
-                {
-                    b.Navigation("Socios");
-                });
-
-            modelBuilder.Entity("ObligatorioMVC.Models.ResponsableLocal", b =>
-                {
-                    b.Navigation("Locales");
+                    b.Navigation("SocioRutinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Socio", b =>
                 {
-                    b.Navigation("socioRutinas");
+                    b.Navigation("SocioRutinas");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.TipoRutina", b =>
+                {
+                    b.Navigation("Rutinas");
+                });
+
+            modelBuilder.Entity("ObligatorioMVC.Models.TipoSocio", b =>
+                {
+                    b.Navigation("Socios");
                 });
 #pragma warning restore 612, 618
         }

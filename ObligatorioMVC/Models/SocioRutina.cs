@@ -2,10 +2,11 @@
 {
     public class SocioRutina
     {
-        public int idSocio { get; set; }
+        public int IdSocio { get; set; }
         public Socio? Socio { get; set; }
-        public int idRutina { get; set; }
-        public Rutina? Rutina { get; set; } 
 
+        public int IdRutina { get; set; }
+        public Rutina? Rutina { get; set; }
+        public int? Calificacion { get; set; }
     }
 }

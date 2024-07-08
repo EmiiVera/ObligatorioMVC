@@ -5,11 +5,11 @@ namespace ObligatorioMVC.Models
     public class TipoMaquina
     {
         [Key]
-        public int IdTipoMaquina { get; set; }
+        public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Tipo de Máquina")]
-        public string NombreTipoMaquina { get; set; }
+        public string Nombre { get; set; }
 
         [Display(Name = "Descripción")]
         public string? Descripcion { get; set; }

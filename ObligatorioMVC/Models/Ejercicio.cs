@@ -5,16 +5,18 @@ namespace ObligatorioMVC.Models;
 public class Ejercicio
 {
     [Key]
-    public int IdEjercicio { get; set; }
+    public int Id { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Campo obligatorio")]
+    public string Nombre { get; set; }
+
     [Display(Name = "Máquina")]
     [ForeignKey("TipoMaquina")]
     public int? IdTipoMaquina { get; set; }
 
     public TipoMaquina? TipoMaquina { get; set; }
 
-    public ICollection<RutinaEjercicio>? rutinaEjercicios { get; set; }
+    public ICollection<RutinaEjercicio>? RutinaEjercicio { get; set; }
 
 
 }
