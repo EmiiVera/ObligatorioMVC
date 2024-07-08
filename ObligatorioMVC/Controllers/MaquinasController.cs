@@ -64,8 +64,12 @@ namespace ObligatorioMVC.Controllers
         // GET: Maquinas/Create
         public IActionResult Create()
         {
+            // Filtrar la lista de tipos de máquinas excluyendo "Ninguna"
+            var tiposMaquina = _context.TipoMaquinas.Where(tm => tm.Nombre != "Ninguna").ToList();
+
             ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal");
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre");
+            ViewData["IdTipoMaquina"] = new SelectList(tiposMaquina, "Id", "Nombre");
+
             return View();
         }
 

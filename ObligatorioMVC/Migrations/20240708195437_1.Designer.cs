@@ -12,7 +12,7 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240708181949_1")]
+    [Migration("20240708195437_1")]
     partial class _1
     {
         /// <inheritdoc />

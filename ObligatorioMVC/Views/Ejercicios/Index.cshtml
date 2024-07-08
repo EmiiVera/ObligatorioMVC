@@ -4,51 +4,55 @@
     ViewData["Title"] = "Ejercicios";
 }
 
-<h1>Ejercicios</h1>
+<h1 class="text-light text-center">Ejercicios</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Crear Nuevo Ejercicio</a>
 </p>
 
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Máquina
-            </th>
-            <th>
-                Descripción
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-dark table-striped text-center">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoMaquina.Descripcion)
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
-                    </div>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    Máquina
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMaquina.Descripcion)
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <div>
     <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
@@ -58,30 +62,45 @@
     body {
         background-color: #333;
         color: #ddd;
+        padding: 20px;
     }
 
     h1 {
         color: #fff;
+        margin-bottom: 20px;
     }
 
+    .table {
+        background-color: #444;
+    }
+
+        .table thead th {
+            color: #ccc;
+        }
+
+        .table tbody td {
+            color: #ddd;
+            text-align: center;
+        }
+
     .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
+        background-color: #555;
+        border-color: #666;
     }
 
         .btn-primary:hover {
-            background-color: #0069d9;
-            border-color: #0062cc;
+            background-color: #666;
+            border-color: #777;
         }
 
     .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
+        background-color: #666;
+        border-color: #777;
     }
 
         .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
+            background-color: #777;
+            border-color: #888;
         }
 
     .btn-warning {
@@ -114,13 +133,11 @@
             border-color: #bd2130;
         }
 
-    .table {
-        background-color: #444;
-        color: #ddd;
+    .btn-sm {
+        margin-right: 5px;
     }
 
-    .thead-dark th {
-        background-color: #343a40;
-        color: #fff;
+    .table-responsive {
+        overflow-x: auto;
     }
 </style>
