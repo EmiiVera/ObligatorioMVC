@@ -36,12 +36,10 @@ namespace ObligatorioMVC.Models
 
         public int VidaUtilRestante()
         {
-            int anio = FechaCompra.Year;
-            int vidaRestante = anio + VidaUtil;
-            return VidaUtil;
-
-
-            //"Calcular vida";
+            int aniosUsados = DateTime.Now.Year - FechaCompra.Year;
+            int vidaRestante = VidaUtil - aniosUsados;
+            return vidaRestante > 0 ? vidaRestante : 0;
         }
+
     }
 }

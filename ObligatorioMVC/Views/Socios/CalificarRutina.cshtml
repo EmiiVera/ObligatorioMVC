@@ -1,0 +1,63 @@
+﻿@model ObligatorioMVC.Models.Socio
+
+@{
+    ViewData["Title"] = "Calificar Rutinas";
+}
+
+<h1 class="text-light">Calificar Rutinas para @Model.Nombre</h1>
+
+<div class="row">
+    @foreach (var sr in Model.SocioRutinas)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark text-light">
+                <div class="card-body">
+                    <h5 class="card-title">@sr.Rutina.DescripcionRutina</h5>
+                    <form asp-action="GuardarCalificacion" method="post">
+                        <input type="hidden" name="idSocio" value="@Model.Id" />
+                        <input type="hidden" name="idRutina" value="@sr.Rutina.Id" />
+                        <label class="text-light">Calificación:</label>
+                        <input type="number" name="Calificaciones[@sr.Rutina.Id]" min="1" max="10" required class="form-control">
+                        <button type="submit" class="btn btn-primary mt-2">Guardar Calificación</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        border: 1px solid #666;
+    }
+
+    .card-title {
+        color: #fff;
+    }
+
+    .form-control {
+        width: 100px;
+        margin-top: 5px;
+    }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+</style>

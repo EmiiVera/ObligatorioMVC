@@ -36,6 +36,8 @@ namespace ObligatorioMVC.Controllers
 
             var local = await _context.Locales
                 .Include(l => l.ResponsableLocal)
+                .Include(l => l.Maquina)
+                .ThenInclude(m => m.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (local == null)
             {

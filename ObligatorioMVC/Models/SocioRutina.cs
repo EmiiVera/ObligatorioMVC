@@ -7,5 +7,6 @@
 
         public int IdRutina { get; set; }
         public Rutina? Rutina { get; set; }
+        public int? Calificacion { get; set; }
     }
 }

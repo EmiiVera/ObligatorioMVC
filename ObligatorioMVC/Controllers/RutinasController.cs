@@ -25,7 +25,8 @@ namespace ObligatorioMVC.Controllers
             var rutinas = await _context.Rutinas
                                         .Include(r => r.TipoRutina)
                                         .Include(r => r.RutinaEjercicios)
-                                            .ThenInclude(re => re.Ejercicio)
+                                        .ThenInclude(re => re.Ejercicio)
+                                        .Include(r => r.SocioRutinas)
                                         .ToListAsync();
 
             return View(rutinas);

@@ -4,79 +4,73 @@
     ViewData["Title"] = "Index";
 }
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewData["Title"]</title>
-</head>
+<h1 class="text-light">Máquinas</h1>
 
-<body>
-    <div class="container">
-        <h1 class="text-light text-center">Maquinas</h1>
-
-        <p>
-            <a class="btn btn-primary" asp-action="Create">Ingresar</a>
-        </p>
-
-        <div class="table-responsive">
-            <table class="table table-dark table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaCompra)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioCompra)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Disponibilidad)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoMaquina.Nombre)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Local.NombreLocal)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().VidaUtil)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @item.FechaCompra.ToString("dd/MM/yyyy")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PrecioCompra)
-                            </td>
-                            <td>
-                                @(item.Disponibilidad ? "Disponible" : "No disponible")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Local.NombreLocal)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.VidaUtil) años
-                            </td>
-                            <td>
-                                <a class="btn btn-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                                <a class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+<div class="d-flex justify-content-between mb-3">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Agregar nueva máquina</a>
+    </p>
+    <form asp-action="Index" method="get" class="form-inline">
+        <div class="form-group">
+            <label for="idLocal" class="text-light mr-2">Local:</label>
+            <select id="idLocal" name="idLocal" class="form-control" style="width: 200px;">
+                <option value="">Todos</option>
+                @foreach (var local in ViewBag.Locales as List<ObligatorioMVC.Models.Local>)
+                {
+                    <option value="@local.Id">@local.NombreLocal</option>
+                }
+            </select>
         </div>
-    </div>
-</body>
+        <button type="submit" class="btn btn-primary ml-2">Filtrar</button>
+    </form>
+</div>
 
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col" class="text-light">Local</th>
+            <th scope="col" class="text-light">Tipo de Máquina</th>
+            <th scope="col" class="text-light">Fecha de Compra</th>
+            <th scope="col" class="text-light">Precio de Compra</th>
+            <th scope="col" class="text-light">Disponibilidad</th>
+            <th scope="col" class="text-light">Vida Útil Restante</th>
+            <th scope="col" class="text-light">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Local.NombreLocal)</td>
+                <td>@Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)</td>
+                <td>@item.FechaCompra.ToString("dd/MM/yyyy")</td>
+                <td>@Html.DisplayFor(modelItem => item.PrecioCompra)</td>
+                <td>
+                    @if (item.Disponibilidad)
+                    {
+                        <text>Disponible</text>
+                    }
+                    else
+                    {
+                        <text>No disponible</text>
+                    }
+                </td>
+                <td>@item.VidaUtilRestante() años</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 <style>
     body {
         background-color: #333;

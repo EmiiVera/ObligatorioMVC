@@ -116,7 +116,6 @@ namespace ObligatorioMVC.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DescripcionRutina = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Calificacion = table.Column<int>(type: "int", nullable: false),
                     IdTipoRutina = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -216,7 +215,8 @@ namespace ObligatorioMVC.Migrations
                 columns: table => new
                 {
                     IdSocio = table.Column<int>(type: "int", nullable: false),
-                    IdRutina = table.Column<int>(type: "int", nullable: false)
+                    IdRutina = table.Column<int>(type: "int", nullable: false),
+                    Calificacion = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

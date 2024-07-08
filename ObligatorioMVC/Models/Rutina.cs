@@ -12,9 +12,6 @@ namespace ObligatorioMVC.Models
         [Display(Name = "Rutina")]
         public string? DescripcionRutina { get; set; }
 
-        [Display(Name = "Calificación")]
-        public int Calificacion { get; set; }
-
         [Display(Name = "Tipo de Rutina")]
         [ForeignKey("TipoRutina")]
         public int IdTipoRutina { get; set; }

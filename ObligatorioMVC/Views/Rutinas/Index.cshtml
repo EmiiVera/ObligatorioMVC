@@ -17,10 +17,10 @@
                     @Html.DisplayNameFor(model => model.DescripcionRutina)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Calificacion)
+                    @Html.DisplayNameFor(model => model.TipoRutina.Nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TipoRutina.Nombre)
+                    Calificación Promedio
                 </th>
                 <th></th>
             </tr>
@@ -33,18 +33,25 @@
                         @Html.DisplayFor(modelItem => item.DescripcionRutina)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Calificacion)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.TipoRutina.Nombre)
                     </td>
                     <td>
-                        <div class="btn-group" role="group">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
-                            <a asp-action="AsignarEjercicio" asp-route-id="@item.Id" class="btn btn-success">Asignar Ejercicio</a>
-                        </div>
+                        @{
+                            var calificaciones = item.SocioRutinas != null
+                            ? item.SocioRutinas
+                            .Where(sr => sr.Calificacion.HasValue)
+                            .Select(sr => sr.Calificacion.Value)
+                            : Enumerable.Empty<int>();
+
+                            double promedio = calificaciones.Any() ? calificaciones.Average() : 0;
+                            <span>@promedio.ToString("0.##")</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm me-1">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm me-1">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm me-1">Eliminar</a>
+                        <a asp-controller="Rutinas" asp-action="AsignarEjercicio" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">Asignar Ejercicio</a>
                     </td>
                 </tr>
             }
@@ -52,14 +59,13 @@
     </table>
 </div>
 
-
 <style>
     body {
         background-color: #333;
         color: #ddd;
     }
 
-    h1 {
+    h1, h4 {
         color: #fff;
     }
 
@@ -67,14 +73,45 @@
         background-color: #444;
     }
 
-        .table thead th {
-            color: #ccc;
+    .table-dark th, .table-dark td {
+        background-color: #555;
+        border-color: #777;
+    }
+
+        .table-dark th.scope-light {
+            background-color: #555;
+            color: #ddd;
         }
 
-        .table tbody td {
-            color: #ddd;
-            text-align: center;
+    .table-dark {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .table-dark .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
         }
+
+    .table-dark {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .table-dark {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .table-dark {
+        background-color: #666;
+        border-color: #777;
+    }
+
+    .table-dark {
+        background-color: #777;
+        border-color: #888;
+    }
 
     .btn-primary {
         background-color: #555;
@@ -106,34 +143,7 @@
             border-color: #aa0000;
         }
 
-    .btn-warning {
-        background-color: #f0ad4e;
-        border-color: #eea236;
+    .btn-sm {
+        margin-right: 5px;
     }
-
-        .btn-warning:hover {
-            background-color: #eea236;
-            border-color: #e0a726;
-        }
-
-    .btn-info {
-        background-color: #5bc0de;
-        border-color: #46b8da;
-    }
-
-        .btn-info:hover {
-            background-color: #46b8da;
-            border-color: #269abc;
-        }
-
-    .btn-success {
-        background-color: #5cb85c;
-        border-color: #4cae4c;
-    }
-
-        .btn-success:hover {
-            background-color: #4cae4c;
-            border-color: #398439;
-        }
 </style>
-

@@ -12,7 +12,7 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240708010331_1")]
+    [Migration("20240708181949_1")]
     partial class _1
     {
         /// <inheritdoc />
@@ -151,9 +151,6 @@ namespace ObligatorioMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Calificacion")
-                        .HasColumnType("int");
-
                     b.Property<string>("DescripcionRutina")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -220,6 +217,9 @@ namespace ObligatorioMVC.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdRutina")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Calificacion")
                         .HasColumnType("int");
 
                     b.HasKey("IdSocio", "IdRutina");

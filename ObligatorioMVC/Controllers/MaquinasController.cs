@@ -20,11 +20,24 @@ namespace ObligatorioMVC.Controllers
         }
 
         // GET: Maquinas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? idLocal)
         {
-            var applicationDbContext = _context.Maquinas.Include(m => m.Local).Include(m => m.TipoMaquina);
-            return View(await applicationDbContext.ToListAsync());
+            IQueryable<Maquina> maquinasQuery = _context.Maquinas.Include(m => m.Local).Include(m => m.TipoMaquina);
+
+            if (idLocal.HasValue)
+            {
+                maquinasQuery = maquinasQuery.Where(m => m.IdLocal == idLocal);
+                ViewBag.NombreLocal = _context.Locales.FirstOrDefault(l => l.Id == idLocal)?.NombreLocal;
+            }
+
+            var maquinas = await maquinasQuery.ToListAsync();
+
+            ViewBag.Locales = await _context.Locales.ToListAsync();
+
+            return View(maquinas);
         }
+
+
 
         // GET: Maquinas/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -43,8 +56,10 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
+            ViewBag.VidaUtilRestante = maquina.VidaUtilRestante();
             return View(maquina);
         }
+
 
         // GET: Maquinas/Create
         public IActionResult Create()

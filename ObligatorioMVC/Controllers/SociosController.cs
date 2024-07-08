@@ -20,18 +20,25 @@ namespace ObligatorioMVC.Controllers
         }
 
         // GET: Socios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? tipoSocioId)
         {
-            var socios = await _context.Socios
+            var tiposSocios = await _context.TipoSocios.ToListAsync();
+            ViewBag.TipoSocios = tiposSocios;
+
+            var socios = _context.Socios
                 .Include(s => s.Local)
                 .Include(s => s.TipoSocio)
                 .Include(s => s.SocioRutinas)
                 .ThenInclude(sr => sr.Rutina)
-                .ToListAsync();
+                .AsQueryable();
 
-            return View(socios);
+            if (tipoSocioId.HasValue && tipoSocioId.Value != 0)
+            {
+                socios = socios.Where(s => s.IdTipoSocio == tipoSocioId);
+            }
+
+            return View(await socios.ToListAsync());
         }
-
 
         // GET: Socios/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -44,14 +51,21 @@ namespace ObligatorioMVC.Controllers
             var socio = await _context.Socios
                 .Include(s => s.Local)
                 .Include(s => s.TipoSocio)
+                .Include(s => s.SocioRutinas)
+                .ThenInclude(sr => sr.Rutina)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (socio == null)
             {
                 return NotFound();
             }
 
+            // Debugging para asegurarte de que SocioRutinas se están cargando correctamente
+            Console.WriteLine($"Número de SocioRutinas: {socio.SocioRutinas.Count}");
+
             return View(socio);
         }
+
 
         // GET: Socios/Create
         public IActionResult Create()
@@ -71,7 +85,7 @@ namespace ObligatorioMVC.Controllers
             {
                 _context.Add(socio);
                 await _context.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal", socio.IdLocal);
@@ -188,8 +202,6 @@ namespace ObligatorioMVC.Controllers
         }
 
 
-
-
         // POST: Socios/DesasignarRutina
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -203,7 +215,7 @@ namespace ObligatorioMVC.Controllers
                 _context.SocioRutinas.Remove(socioRutina);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(AsignarRutina), new {id= idSocio});
+            return RedirectToAction(nameof(AsignarRutina), new { id = idSocio });
         }
 
 
@@ -242,10 +254,47 @@ namespace ObligatorioMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Socios/CalificarRutina/5
+        public async Task<IActionResult> CalificarRutina(int id)
+        {
+            var socio = await _context.Socios
+                .Include(s => s.SocioRutinas)
+                .ThenInclude(sr => sr.Rutina)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (socio == null)
+            {
+                return NotFound();
+            }
+
+            return View(socio);
+        }
+
+        // POST: Socios/GuardarCalificacion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GuardarCalificacion(int idSocio, Dictionary<int, int> Calificaciones)
+        {
+            foreach (var (idRutina, calificacion) in Calificaciones)
+            {
+                var socioRutina = await _context.SocioRutinas
+                    .FirstOrDefaultAsync(sr => sr.IdSocio == idSocio && sr.IdRutina == idRutina);
+
+                if (socioRutina != null)
+                {
+                    socioRutina.Calificacion = calificacion;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index), new { id = idSocio });
+        }
+
+
         private bool SocioExists(int id)
         {
             return _context.Socios.Any(e => e.Id == id);
         }
     }
 }
-
