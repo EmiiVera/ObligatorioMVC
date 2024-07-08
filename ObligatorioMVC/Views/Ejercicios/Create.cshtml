@@ -1,10 +1,10 @@
 ﻿@model ObligatorioMVC.Models.Ejercicio
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Crear</h1>
+<h1>Crear Ejercicio</h1>
 
 <h4>Ejercicio</h4>
 <hr />
@@ -19,19 +19,57 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdTipoMaquina" class="control-label"></label>
-                <select asp-for="IdTipoMaquina" class ="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
+                <select asp-for="IdTipoMaquina" class="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
+                <span asp-validation-for="IdTipoMaquina" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Regresar a la lista</a>
+    <a asp-action="Index" class="btn btn-secondary">Regresar a la lista</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .row {
+        margin-bottom: 10px;
+    }
+</style>

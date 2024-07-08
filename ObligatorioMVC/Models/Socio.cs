@@ -5,7 +5,7 @@ namespace ObligatorioMVC.Models
 {
     public class Socio : Usuario
     {
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [ForeignKey("Local")]
         public int IdLocal { get; set; }
 
@@ -19,3 +19,4 @@ namespace ObligatorioMVC.Models
         public ICollection<SocioRutina>? SocioRutinas { get; set; }
     }
 }
+

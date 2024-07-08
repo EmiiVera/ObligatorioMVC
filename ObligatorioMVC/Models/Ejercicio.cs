@@ -7,7 +7,7 @@ public class Ejercicio
     [Key]
     public int Id { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Campo obligatorio")]
     public string Nombre { get; set; }
 
     [Display(Name = "Máquina")]

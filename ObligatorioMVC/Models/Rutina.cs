@@ -8,7 +8,7 @@ namespace ObligatorioMVC.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Rutina")]
         public string? DescripcionRutina { get; set; }
 
@@ -24,8 +24,5 @@ namespace ObligatorioMVC.Models
 
         public ICollection<RutinaEjercicio>? RutinaEjercicios { get; set; }
 
-        [Display(Name = "Ejercicios")]
-        [NotMapped]
-        public List<int> EjercicioSeleccionados { get; set; }
     }
 }

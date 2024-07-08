@@ -8,16 +8,16 @@ namespace ObligatorioMVC.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Fecha de la compra")]
         public DateTime FechaCompra {  get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Precio")]
         public double PrecioCompra { get; set; }
         public bool Disponibilidad { get; set; }
 
-        //[Required] [Display(Name = "Local")] [ForeignKey("Local")] public int? IdLocal { get; set; } //public Local? Local { get; set; }
+        //[Required(ErrorMessage = "Campo obligatorio")] [Display(Name = "Local")] [ForeignKey("Local")] public int? IdLocal { get; set; } //public Local? Local { get; set; }
 
         [Display(Name = "Máquina")]
         [ForeignKey("TipoMaquina")]
@@ -30,7 +30,7 @@ namespace ObligatorioMVC.Models
         public int IdLocal {  get; set; }
         public Local? Local { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Vida Útil(años)")]
         public int VidaUtil { get; set; }
 

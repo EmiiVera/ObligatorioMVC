@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Locals
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Local.Include(l => l.ResponsableLocal);
+            var applicationDbContext = _context.Locales.Include(l => l.ResponsableLocal);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var local = await _context.Local
+            var local = await _context.Locales
                 .Include(l => l.ResponsableLocal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (local == null)
@@ -48,7 +48,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Locals/Create
         public IActionResult Create()
         {
-            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsable, "Id", "Nombre");
+            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsables, "Id", "Nombre");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ObligatorioMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsable, "Id", "Nombre", local.IdResponsableLocal);
+            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsables, "Id", "Nombre", local.IdResponsableLocal);
             return View(local);
         }
 
@@ -77,12 +77,12 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var local = await _context.Local.FindAsync(id);
+            var local = await _context.Locales.FindAsync(id);
             if (local == null)
             {
                 return NotFound();
             }
-            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsable, "Id", "Nombre", local.IdResponsableLocal);
+            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsables, "Id", "Nombre", local.IdResponsableLocal);
             return View(local);
         }
 
@@ -118,7 +118,7 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsable, "Id", "Nombre", local.IdResponsableLocal);
+            ViewData["IdResponsableLocal"] = new SelectList(_context.Responsables, "Id", "Nombre", local.IdResponsableLocal);
             return View(local);
         }
 
@@ -130,7 +130,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var local = await _context.Local
+            var local = await _context.Locales
                 .Include(l => l.ResponsableLocal)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (local == null)
@@ -146,10 +146,10 @@ namespace ObligatorioMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var local = await _context.Local.FindAsync(id);
+            var local = await _context.Locales.FindAsync(id);
             if (local != null)
             {
-                _context.Local.Remove(local);
+                _context.Locales.Remove(local);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace ObligatorioMVC.Controllers
 
         private bool LocalExists(int id)
         {
-            return _context.Local.Any(e => e.Id == id);
+            return _context.Locales.Any(e => e.Id == id);
         }
     }
 }

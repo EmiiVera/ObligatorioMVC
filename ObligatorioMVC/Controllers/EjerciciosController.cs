@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Ejercicios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ejercicio.Include(e => e.TipoMaquina);
+            var applicationDbContext = _context.Ejercicios.Include(e => e.TipoMaquina);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var ejercicio = await _context.Ejercicio
+            var ejercicio = await _context.Ejercicios
                 .Include(e => e.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ejercicio == null)
@@ -48,7 +48,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Ejercicios/Create
         public IActionResult Create()
         {
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre");
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ObligatorioMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", ejercicio.IdTipoMaquina);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", ejercicio.IdTipoMaquina);
             return View(ejercicio);
         }
 
@@ -77,12 +77,12 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var ejercicio = await _context.Ejercicio.FindAsync(id);
+            var ejercicio = await _context.Ejercicios.FindAsync(id);
             if (ejercicio == null)
             {
                 return NotFound();
             }
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", ejercicio.IdTipoMaquina);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", ejercicio.IdTipoMaquina);
             return View(ejercicio);
         }
 
@@ -118,7 +118,7 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", ejercicio.IdTipoMaquina);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", ejercicio.IdTipoMaquina);
             return View(ejercicio);
         }
 
@@ -130,7 +130,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var ejercicio = await _context.Ejercicio
+            var ejercicio = await _context.Ejercicios
                 .Include(e => e.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ejercicio == null)
@@ -146,10 +146,10 @@ namespace ObligatorioMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ejercicio = await _context.Ejercicio.FindAsync(id);
+            var ejercicio = await _context.Ejercicios.FindAsync(id);
             if (ejercicio != null)
             {
-                _context.Ejercicio.Remove(ejercicio);
+                _context.Ejercicios.Remove(ejercicio);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace ObligatorioMVC.Controllers
 
         private bool EjercicioExists(int id)
         {
-            return _context.Ejercicio.Any(e => e.Id == id);
+            return _context.Ejercicios.Any(e => e.Id == id);
         }
     }
 }

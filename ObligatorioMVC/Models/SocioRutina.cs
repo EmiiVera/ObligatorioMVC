@@ -4,7 +4,8 @@
     {
         public int IdSocio { get; set; }
         public Socio? Socio { get; set; }
+
         public int IdRutina { get; set; }
-        public Rutina? Rutina { get; set; } 
+        public Rutina? Rutina { get; set; }
     }
 }

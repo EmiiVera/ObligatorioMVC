@@ -1,58 +1,91 @@
 ﻿@model ObligatorioMVC.Models.Maquina
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Create</h1>
+<style>
+    /* Estilo para la imagen de fondo */
+    body {
+        background-image: url('https://images.pexels.com/photos/669582/pexels-photo-669582.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 
-<h4>Maquina</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FechaCompra" class="control-label"></label>
-                <input asp-for="FechaCompra" class="form-control" type="date" />
-                <span asp-validation-for="FechaCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioCompra" class="control-label"></label>
-                <input asp-for="PrecioCompra" class="form-control" />
-                <span asp-validation-for="PrecioCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTipoMaquina" class="control-label"></label>
-                <select asp-for="IdTipoMaquina" class ="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdLocal" class="control-label"></label>
-                <select asp-for="IdLocal" class ="form-control" asp-items="ViewBag.IdLocal"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="VidaUtil" class="control-label"></label>
-                <input asp-for="VidaUtil" class="form-control" />
-                <span asp-validation-for="VidaUtil" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input asp-for="Disponibilidad" class="form-check-input" type="checkbox" />
-                    <label asp-for="Disponibilidad" class="form-check-label"></label>
+    /* Estilo para el difuminado de la imagen */
+    .background-blur {
+        filter: blur(8px); /* Aplicamos el difuminado a la imagen de fondo */
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Para asegurar que esté detrás de todo el contenido */
+        top: 0;
+        left: 0;
+    }
+
+    /* Estilo para el contenido principal */
+    .content {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+        margin-top: 20px; /* Espacio entre el contenido y el borde superior */
+        border-radius: 10px; /* Bordes redondeados */
+    }
+</style>
+
+<div class="background-blur"></div> <!-- Div para el difuminado -->
+
+<div class="content">
+    <h1>Crear</h1>
+
+    <h4>Maquina</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FechaCompra" class="control-label"></label>
+                    <input asp-for="FechaCompra" class="form-control" type="date" />
+                    <span asp-validation-for="FechaCompra" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="Disponibilidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="PrecioCompra" class="control-label"></label>
+                    <input asp-for="PrecioCompra" class="form-control" />
+                    <span asp-validation-for="PrecioCompra" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTipoMaquina" class="control-label"></label>
+                    <select asp-for="IdTipoMaquina" class="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdLocal" class="control-label"></label>
+                    <select asp-for="IdLocal" class="form-control" asp-items="ViewBag.IdLocal"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VidaUtil" class="control-label"></label>
+                    <input asp-for="VidaUtil" class="form-control" />
+                    <span asp-validation-for="VidaUtil" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input asp-for="Disponibilidad" class="form-check-input" type="checkbox" />
+                        <label asp-for="Disponibilidad" class="form-check-label"></label>
+                    </div>
+                    <span asp-validation-for="Disponibilidad" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" /> |
+                    <a class="btn btn-secondary" asp-action="Index">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver a la lista</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

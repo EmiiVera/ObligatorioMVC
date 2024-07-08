@@ -1,35 +1,29 @@
 ﻿@model ObligatorioMVC.Models.Rutina
 
 @{
-    ViewData["Title"] = "Create Rutina";
+    ViewData["Title"] = "Crear Rutina";
 }
 
-<h1>Create Rutina</h1>
+<h1 class="text-light">Crear Rutina</h1>
 
-<h4>Rutina</h4>
+<h4 class="text-light">Rutina</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" method="post">
             <div class="form-group">
-                <label asp-for="DescripcionRutina" class="control-label"></label>
+                <label asp-for="DescripcionRutina" class="control-label">Descripción de la Rutina</label>
                 <input asp-for="DescripcionRutina" class="form-control" />
                 <span asp-validation-for="DescripcionRutina" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Calificacion" class="control-label"></label>
+                <label asp-for="Calificacion" class="control-label">Calificación</label>
                 <input asp-for="Calificacion" class="form-control" />
                 <span asp-validation-for="Calificacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdTipoRutina" class="control-label"></label>
+                <label asp-for="IdTipoRutina" class="control-label">Tipo de Rutina</label>
                 <select asp-for="IdTipoRutina" class="form-control" asp-items="ViewBag.IdTipoRutina"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="EjercicioSeleccionados" class="control-label"></label>
-                <select asp-for="EjercicioSeleccionados" class="form-control" asp-items="ViewBag.Ejercicios" multiple="multiple"></select>
-                <span asp-validation-for="EjercicioSeleccionados" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Crear Rutina</button>
@@ -38,7 +32,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Volver a la lista</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>
 
 @section Scripts {
@@ -46,3 +40,52 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        background-color: #555;
+        color: #fff;
+        border-color: #666;
+    }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+
+    .text-danger {
+        color: #dc3545;
+    }
+</style>

@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿    using System.ComponentModel.DataAnnotations;
 
-namespace ObligatorioMVC.Models
-{
-    public class RutinaEjercicio
+    namespace ObligatorioMVC.Models
     {
-        public int IdRutina { get; set; }
-        public Rutina? Rutina { get; set; }
-        public int IdEjercicio { get; set; }
-        public Ejercicio? Ejercicio { get; set; }
+        public class RutinaEjercicio
+        {
+            public int IdRutina { get; set; }
+            public Rutina? Rutina { get; set; }
+            public int IdEjercicio { get; set; }
+            public Ejercicio? Ejercicio { get; set; }
+        }
     }
-}

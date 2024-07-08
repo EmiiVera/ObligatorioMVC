@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Responsables
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Responsable.ToListAsync());
+            return View(await _context.Responsables.ToListAsync());
         }
 
         // GET: Responsables/Details/5
@@ -33,7 +33,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var responsable = await _context.Responsable
+            var responsable = await _context.Responsables
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (responsable == null)
             {
@@ -73,7 +73,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var responsable = await _context.Responsable.FindAsync(id);
+            var responsable = await _context.Responsables.FindAsync(id);
             if (responsable == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var responsable = await _context.Responsable
+            var responsable = await _context.Responsables
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (responsable == null)
             {
@@ -139,10 +139,10 @@ namespace ObligatorioMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var responsable = await _context.Responsable.FindAsync(id);
+            var responsable = await _context.Responsables.FindAsync(id);
             if (responsable != null)
             {
-                _context.Responsable.Remove(responsable);
+                _context.Responsables.Remove(responsable);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace ObligatorioMVC.Controllers
 
         private bool ResponsableExists(int id)
         {
-            return _context.Responsable.Any(e => e.Id == id);
+            return _context.Responsables.Any(e => e.Id == id);
         }
     }
 }

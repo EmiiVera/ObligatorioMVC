@@ -1,13 +1,13 @@
 ﻿@model ObligatorioMVC.Models.Local
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Crear</h1>
+<h1 class="text-light">Crear</h1>
 
-<h4>Locales</h4>
-<hr />
+<h4 class="text-light">Locales</h4>
+<hr class="bg-light" />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -34,19 +34,65 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdResponsableLocal" class="control-label"></label>
-                <select asp-for="IdResponsableLocal" class ="form-control" asp-items="ViewBag.IdResponsableLocal"></select>
+                <select asp-for="IdResponsableLocal" class="form-control" asp-items="ViewBag.IdResponsableLocal"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" /> |
+                <a class="btn btn-secondary" asp-action="Index">Volver a la lista</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver a la lista</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .form-control {
+        background-color: #444;
+        color: #ddd;
+        border-color: #555;
+    }
+
+        .form-control:focus {
+            background-color: #555;
+            color: #fff;
+            border-color: #666;
+        }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+
+    hr.bg-light {
+        border-top: 1px solid #fff;
+    }
+</style>

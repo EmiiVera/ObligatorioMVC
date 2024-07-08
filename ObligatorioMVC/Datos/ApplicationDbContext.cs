@@ -13,17 +13,17 @@ namespace ObligatorioMVC.Datos
         }
 
         //Modelos a crear
-        public DbSet<Ejercicio> Ejercicio { get; set; }
-        public DbSet<Local> Local { get; set; }
-        public DbSet<Maquina> Maquina { get; set; }
-        public DbSet<Responsable> Responsable { get; set; }
-        public DbSet<Rutina> Rutina { get; set; }
+        public DbSet<Ejercicio> Ejercicios { get; set; }
+        public DbSet<Local> Locales { get; set; }
+        public DbSet<Maquina> Maquinas { get; set; }
+        public DbSet<Responsable> Responsables { get; set; }
+        public DbSet<Rutina> Rutinas { get; set; }
         public DbSet<RutinaEjercicio> RutinaEjercicios { get; set; }
-        public DbSet<Socio> Socio { get; set; }
-        public DbSet<SocioRutina> SocioRutina { get; set; }
-        public DbSet<TipoMaquina> TipoMaquina { get; set; }
-        public DbSet<TipoRutina> TipoRutina { get; set; }
-        public DbSet<TipoSocio> TipoSocio { get; set; }
+        public DbSet<Socio> Socios { get; set; }
+        public DbSet<SocioRutina> SocioRutinas { get; set; }
+        public DbSet<TipoMaquina> TipoMaquinas { get; set; }
+        public DbSet<TipoRutina> TipoRutinas { get; set; }
+        public DbSet<TipoSocio> TipoSocios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace ObligatorioMVC.Datos
                 .WithMany(up => up.RutinaEjercicios)
                 .HasForeignKey(up => up.IdRutina);
 
-            //SocioRutina
+            //SocioRutinas
             modelBuilder.Entity<SocioRutina>()
                 .HasKey(up => new { up.IdSocio, up.IdRutina });
 
@@ -65,7 +65,7 @@ namespace ObligatorioMVC.Datos
                 .HasForeignKey(up => up.IdLocal);
 
             //Relaciones 1 a 1
-            //Local - ResponsableLocal
+            //Locales - ResponsableLocal
             modelBuilder.Entity<Responsable>()
                 .HasOne(up => up.Local)
                 .WithOne(up => up.ResponsableLocal)

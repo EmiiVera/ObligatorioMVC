@@ -4,50 +4,107 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Socios</h1>
+<h1 class="text-light">Socios</h1>
 
 <p>
-    <a asp-action="Create">Ingresar</a>
+    <a asp-action="Create" class="btn btn-primary">Ingresar</a>
 </p>
-<table class="table">
+<table class="table table-striped table-dark">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Local)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoSocio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th></th>
+            <th scope="col" class="text-light">Local</th>
+            <th scope="col" class="text-light">Tipo membresía</th>
+            <th scope="col" class="text-light">Nombre</th>
+            <th scope="col" class="text-light">Teléfono</th>
+            <th scope="col" class="text-light">Rutinas Asociadas</th>
+            <th scope="col" class="text-light">Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Local.NombreLocal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoSocio.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Local.NombreLocal)</td>
+                <td>@Html.DisplayFor(modelItem => item.TipoSocio.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                <td>
+                    @if (item.SocioRutinas != null && item.SocioRutinas.Any())
+                    {
+                        <ul>
+                            @foreach (var sr in item.SocioRutinas)
+                            {
+                                <li>@sr.Rutina.DescripcionRutina</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No tiene rutinas asignadas.</p>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                    <a asp-controller="Socios" asp-action="AsignarRutina" asp-route-id="@item.Id" class="btn btn-secondary">Asignar Rutina</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .table {
+        background-color: #444;
+    }
+
+    .table-dark th, .table-dark td {
+        background-color: #555;
+        border-color: #777;
+    }
+
+        .table-dark th.scope-light {
+            background-color: #555;
+            color: #ddd;
+        }
+
+    .table-dark .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .table-dark .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .table-dark .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .table-dark .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .table-dark .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .table-dark .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+</style>

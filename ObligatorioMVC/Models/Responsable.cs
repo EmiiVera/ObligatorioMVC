@@ -6,7 +6,7 @@ namespace ObligatorioMVC.Models
 {
     public class Responsable : Usuario
     {
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public double Sueldo { get; set; }
         public Local? Local { get; set; }
     }

@@ -12,8 +12,8 @@ using ObligatorioMVC.Datos;
 namespace ObligatorioMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240702213507_a")]
-    partial class a
+    [Migration("20240708010331_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdTipoMaquina");
 
-                    b.ToTable("Ejercicio");
+                    b.ToTable("Ejercicios");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Local", b =>
@@ -81,7 +81,7 @@ namespace ObligatorioMVC.Migrations
                         .IsUnique()
                         .HasFilter("[IdResponsableLocal] IS NOT NULL");
 
-                    b.ToTable("Local");
+                    b.ToTable("Locales");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Maquina", b =>
@@ -116,7 +116,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdTipoMaquina");
 
-                    b.ToTable("Maquina");
+                    b.ToTable("Maquinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Responsable", b =>
@@ -140,7 +140,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Responsable");
+                    b.ToTable("Responsables");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.Rutina", b =>
@@ -165,7 +165,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdTipoRutina");
 
-                    b.ToTable("Rutina");
+                    b.ToTable("Rutinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.RutinaEjercicio", b =>
@@ -211,7 +211,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdTipoSocio");
 
-                    b.ToTable("Socio");
+                    b.ToTable("Socios");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.SocioRutina", b =>
@@ -226,7 +226,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasIndex("IdRutina");
 
-                    b.ToTable("SocioRutina");
+                    b.ToTable("SocioRutinas");
                 });
 
             modelBuilder.Entity("ObligatorioMVC.Models.TipoMaquina", b =>
@@ -246,7 +246,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoMaquina");
+                    b.ToTable("TipoMaquinas");
 
                     b.HasData(
                         new
@@ -421,7 +421,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoRutina");
+                    b.ToTable("TipoRutinas");
 
                     b.HasData(
                         new
@@ -455,7 +455,7 @@ namespace ObligatorioMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoSocio");
+                    b.ToTable("TipoSocios");
 
                     b.HasData(
                         new

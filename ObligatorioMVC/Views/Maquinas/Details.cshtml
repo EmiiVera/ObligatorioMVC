@@ -4,51 +4,100 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div>
+    <h1 class="text-light">Details</h1>
 
-<div>
-    <h4>Maquina</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaCompra)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaCompra)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioCompra)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecioCompra)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Disponibilidad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Disponibilidad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoMaquina)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoMaquina.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Local)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Local.Ciudad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VidaUtil)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VidaUtil)
-        </dd>
-    </dl>
+    <div>
+        <h4 class="text-light">Maquina</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FechaCompra)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FechaCompra)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PrecioCompra)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PrecioCompra)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disponibilidad)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disponibilidad)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TipoMaquina)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TipoMaquina.Nombre)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Local)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Local.Ciudad)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.VidaUtil)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VidaUtil)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Volver a la lista</a>
-</div>
+
+<style>
+    body {
+        background-color: #333;
+        color: #fff;
+    }
+
+    h1, h4 {
+        color: #fff;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    dl {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    dt {
+        font-weight: bold;
+        color: #fff;
+    }
+
+    dd {
+        margin-left: 0;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+        color: #fff;
+        margin-right: 5px;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    a {
+        color: #fff;
+    }
+</style>

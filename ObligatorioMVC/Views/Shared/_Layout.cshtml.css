@@ -1,89 +1,46 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
+﻿/* wwwroot/css/site.css */
+body {
+    background-color: #333;
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-a {
-    color: #0077cc;
+.navbar {
+    background-color: #444;
 }
 
-    a:hover {
-        text-decoration: underline;
+    .navbar .nav-link {
+        color: #ccc;
     }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
+        .navbar .nav-link:hover {
+            color: #fff;
+            background-color: #555;
+            border-radius: 5px;
+        }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
-}
-
-/* Custom Styles for Home Page */
-.home-container {
-    margin-top: 20px;
-}
-
-.custom-carousel .carousel-inner img {
-    height: 500px;
-    object-fit: cover;
-}
-
-.carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 15px;
-    border-radius: 10px;
-}
-
-    .carousel-caption h2 {
-        font-size: 2.5rem;
+    .navbar .navbar-brand {
         color: #fff;
     }
 
-    .carousel-caption p {
-        font-size: 1.25rem;
-        color: #ddd;
+        .navbar .navbar-brand:hover {
+            color: #ddd;
+        }
+
+.footer {
+    background-color: #444;
+    color: #ccc;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+    .footer a {
+        color: #bbb;
     }
 
-.carousel-indicators button {
-    background-color: #1b6ec2;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: #1b6ec2;
-    border-radius: 50%;
-}
+        .footer a:hover {
+            color: #fff;
+        }

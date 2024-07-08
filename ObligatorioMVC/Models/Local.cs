@@ -8,19 +8,19 @@ namespace ObligatorioMVC.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Local")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 50 caracteres.")]
         public string NombreLocal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public string Ciudad { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Teléfono")]
         public string? TelefonoLocal { get; set; }
 

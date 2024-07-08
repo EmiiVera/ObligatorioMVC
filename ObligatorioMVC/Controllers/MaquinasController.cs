@@ -22,7 +22,7 @@ namespace ObligatorioMVC.Controllers
         // GET: Maquinas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Maquina.Include(m => m.Local).Include(m => m.TipoMaquina);
+            var applicationDbContext = _context.Maquinas.Include(m => m.Local).Include(m => m.TipoMaquina);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var maquina = await _context.Maquina
+            var maquina = await _context.Maquinas
                 .Include(m => m.Local)
                 .Include(m => m.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +49,8 @@ namespace ObligatorioMVC.Controllers
         // GET: Maquinas/Create
         public IActionResult Create()
         {
-            ViewData["IdLocal"] = new SelectList(_context.Local, "Id", "NombreLocal");
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre");
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal");
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace ObligatorioMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "Id", "NombreLocal", maquina.IdLocal);
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", maquina.IdTipoMaquina);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal", maquina.IdLocal);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", maquina.IdTipoMaquina);
             return View(maquina);
         }
 
@@ -80,13 +80,13 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var maquina = await _context.Maquina.FindAsync(id);
+            var maquina = await _context.Maquinas.FindAsync(id);
             if (maquina == null)
             {
                 return NotFound();
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "Id", "NombreLocal", maquina.IdLocal);
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", maquina.IdTipoMaquina);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal", maquina.IdLocal);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", maquina.IdTipoMaquina);
             return View(maquina);
         }
 
@@ -122,8 +122,8 @@ namespace ObligatorioMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdLocal"] = new SelectList(_context.Local, "Id", "NombreLocal", maquina.IdLocal);
-            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquina, "Id", "Nombre", maquina.IdTipoMaquina);
+            ViewData["IdLocal"] = new SelectList(_context.Locales, "Id", "NombreLocal", maquina.IdLocal);
+            ViewData["IdTipoMaquina"] = new SelectList(_context.TipoMaquinas, "Id", "Nombre", maquina.IdTipoMaquina);
             return View(maquina);
         }
 
@@ -135,7 +135,7 @@ namespace ObligatorioMVC.Controllers
                 return NotFound();
             }
 
-            var maquina = await _context.Maquina
+            var maquina = await _context.Maquinas
                 .Include(m => m.Local)
                 .Include(m => m.TipoMaquina)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace ObligatorioMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var maquina = await _context.Maquina.FindAsync(id);
+            var maquina = await _context.Maquinas.FindAsync(id);
             if (maquina != null)
             {
-                _context.Maquina.Remove(maquina);
+                _context.Maquinas.Remove(maquina);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace ObligatorioMVC.Controllers
 
         private bool MaquinaExists(int id)
         {
-            return _context.Maquina.Any(e => e.Id == id);
+            return _context.Maquinas.Any(e => e.Id == id);
         }
     }
 }

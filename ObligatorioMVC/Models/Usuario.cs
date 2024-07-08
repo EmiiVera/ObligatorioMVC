@@ -7,11 +7,11 @@ namespace ObligatorioMVC.Models
         [Key]
         public int Id {  get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }
         

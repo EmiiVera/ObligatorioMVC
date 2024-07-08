@@ -4,58 +4,119 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editar</h1>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Máquina</h1>
+        <hr />
 
-<h4>Maquina</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FechaCompra" class="control-label"></label>
-                <input asp-for="FechaCompra" class="form-control" />
-                <span asp-validation-for="FechaCompra" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label asp-for="FechaCompra" class="control-label">Fecha de Compra</label>
+                        <input asp-for="FechaCompra" class="form-control" />
+                        <span asp-validation-for="FechaCompra" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PrecioCompra" class="control-label">Precio de Compra</label>
+                        <input asp-for="PrecioCompra" class="form-control" />
+                        <span asp-validation-for="PrecioCompra" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input asp-for="Disponibilidad" class="form-check-input" type="checkbox" />
+                            <label class="form-check-label">Disponibilidad</label>
+                        </div>
+                        <span asp-validation-for="Disponibilidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdTipoMaquina" class="control-label">Tipo de Máquina</label>
+                        <select asp-for="IdTipoMaquina" class="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
+                        <span asp-validation-for="IdTipoMaquina" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdLocal" class="control-label">Local</label>
+                        <select asp-for="IdLocal" class="form-control" asp-items="ViewBag.IdLocal"></select>
+                        <span asp-validation-for="IdLocal" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="VidaUtil" class="control-label">Vida Útil (años)</label>
+                        <input asp-for="VidaUtil" class="form-control" />
+                        <span asp-validation-for="VidaUtil" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="PrecioCompra" class="control-label"></label>
-                <input asp-for="PrecioCompra" class="form-control" />
-                <span asp-validation-for="PrecioCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input asp-for="Disponibilidad" class="form-check-input" type="checkbox" />
-                    <label asp-for="Disponibilidad" class="form-check-label"></label>
-                </div>
-                <span asp-validation-for="Disponibilidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTipoMaquina" class="control-label"></label>
-                <select asp-for="IdTipoMaquina" class="form-control" asp-items="ViewBag.IdTipoMaquina"></select>
-                <span asp-validation-for="IdTipoMaquina" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdLocal" class="control-label"></label>
-                <select asp-for="IdLocal" class="form-control" asp-items="ViewBag.IdLocal"></select>
-                <span asp-validation-for="IdLocal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VidaUtil" class="control-label"></label>
-                <input asp-for="VidaUtil" class="form-control" />
-                <span asp-validation-for="VidaUtil" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Volver a la lista</a>
-</div>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            padding-top: 20px;
+        }
+
+        h1, h4 {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control, .form-check-input {
+            background-color: #555;
+            color: #fff;
+            border-color: #666;
+        }
+
+        .btn-primary {
+            background-color: #555;
+            border-color: #666;
+        }
+
+            .btn-primary:hover {
+                background-color: #666;
+                border-color: #777;
+            }
+
+        .btn-secondary {
+            background-color: #666;
+            border-color: #777;
+        }
+
+            .btn-secondary:hover {
+                background-color: #777;
+                border-color: #888;
+            }
+
+        .text-danger {
+            color: #dc3545;
+        }
+    </style>
+</body>
+</html>

@@ -6,7 +6,7 @@ namespace ObligatorioMVC.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Tipo de Socio")]
         public string Nombre { get; set; }
         public ICollection<Socio>? Socios { get; set; }

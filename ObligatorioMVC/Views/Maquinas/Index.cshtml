@@ -4,63 +4,129 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Maquinas</h1>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
 
-<p>
-    <a asp-action="Create">Ingresar</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().FechaCompra)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioCompra)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Disponibilidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TipoMaquina.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Local.NombreLocal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().VidaUtil)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.FechaCompra.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioCompra)
-                </td>
-                <td>
-                    @(item.Disponibilidad ? "Disponible" : "No disponible")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Local.NombreLocal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VidaUtil) años <!-- Se le agrega la palabra años al final-->
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+<body>
+    <div class="container">
+        <h1 class="text-light text-center">Maquinas</h1>
+
+        <p>
+            <a class="btn btn-primary" asp-action="Create">Ingresar</a>
+        </p>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaCompra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioCompra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().Disponibilidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoMaquina.Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().Local.NombreLocal)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().VidaUtil)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.FechaCompra.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PrecioCompra)
+                            </td>
+                            <td>
+                                @(item.Disponibilidad ? "Disponible" : "No disponible")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoMaquina.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Local.NombreLocal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VidaUtil) años
+                            </td>
+                            <td>
+                                <a class="btn btn-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                <a class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<style>
+    body {
+        background-color: #333;
+        color: #ddd;
+    }
+
+    h1 {
+        color: #fff;
+    }
+
+    .table {
+        background-color: #444;
+    }
+
+        .table thead th {
+            color: #ccc;
         }
-    </tbody>
-</table>
+
+        .table tbody td {
+            color: #ddd;
+            text-align: center;
+        }
+
+    .btn-primary {
+        background-color: #555;
+        border-color: #666;
+    }
+
+        .btn-primary:hover {
+            background-color: #666;
+            border-color: #777;
+        }
+
+    .btn-secondary {
+        background-color: #666;
+        border-color: #777;
+    }
+
+        .btn-secondary:hover {
+            background-color: #777;
+            border-color: #888;
+        }
+
+    .btn-danger {
+        background-color: #800000;
+        border-color: #990000;
+    }
+
+        .btn-danger:hover {
+            background-color: #990000;
+            border-color: #aa0000;
+        }
+</style>

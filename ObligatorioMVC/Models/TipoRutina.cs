@@ -7,7 +7,7 @@ namespace ObligatorioMVC.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Tipo de Rutina")]
         public string Nombre { get; set; }
 

@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ObligatorioMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class a : Migration
+    public partial class _1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Responsable",
+                name: "Responsables",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,11 +25,11 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Responsable", x => x.Id);
+                    table.PrimaryKey("PK_Responsables", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoMaquina",
+                name: "TipoMaquinas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -39,11 +39,11 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoMaquina", x => x.Id);
+                    table.PrimaryKey("PK_TipoMaquinas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoRutina",
+                name: "TipoRutinas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -52,11 +52,11 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoRutina", x => x.Id);
+                    table.PrimaryKey("PK_TipoRutinas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoSocio",
+                name: "TipoSocios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -65,11 +65,11 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoSocio", x => x.Id);
+                    table.PrimaryKey("PK_TipoSocios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Local",
+                name: "Locales",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -82,16 +82,16 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Local", x => x.Id);
+                    table.PrimaryKey("PK_Locales", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Local_Responsable_IdResponsableLocal",
+                        name: "FK_Locales_Responsables_IdResponsableLocal",
                         column: x => x.IdResponsableLocal,
-                        principalTable: "Responsable",
+                        principalTable: "Responsables",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ejercicio",
+                name: "Ejercicios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -101,16 +101,16 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ejercicio", x => x.Id);
+                    table.PrimaryKey("PK_Ejercicios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ejercicio_TipoMaquina_IdTipoMaquina",
+                        name: "FK_Ejercicios_TipoMaquinas_IdTipoMaquina",
                         column: x => x.IdTipoMaquina,
-                        principalTable: "TipoMaquina",
+                        principalTable: "TipoMaquinas",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rutina",
+                name: "Rutinas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -121,17 +121,17 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rutina", x => x.Id);
+                    table.PrimaryKey("PK_Rutinas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rutina_TipoRutina_IdTipoRutina",
+                        name: "FK_Rutinas_TipoRutinas_IdTipoRutina",
                         column: x => x.IdTipoRutina,
-                        principalTable: "TipoRutina",
+                        principalTable: "TipoRutinas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Maquina",
+                name: "Maquinas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -145,22 +145,22 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Maquina", x => x.Id);
+                    table.PrimaryKey("PK_Maquinas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Maquina_Local_IdLocal",
+                        name: "FK_Maquinas_Locales_IdLocal",
                         column: x => x.IdLocal,
-                        principalTable: "Local",
+                        principalTable: "Locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Maquina_TipoMaquina_IdTipoMaquina",
+                        name: "FK_Maquinas_TipoMaquinas_IdTipoMaquina",
                         column: x => x.IdTipoMaquina,
-                        principalTable: "TipoMaquina",
+                        principalTable: "TipoMaquinas",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Socio",
+                name: "Socios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -172,17 +172,17 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Socio", x => x.Id);
+                    table.PrimaryKey("PK_Socios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Socio_Local_IdLocal",
+                        name: "FK_Socios_Locales_IdLocal",
                         column: x => x.IdLocal,
-                        principalTable: "Local",
+                        principalTable: "Locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Socio_TipoSocio_IdTipoSocio",
+                        name: "FK_Socios_TipoSocios_IdTipoSocio",
                         column: x => x.IdTipoSocio,
-                        principalTable: "TipoSocio",
+                        principalTable: "TipoSocios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -198,21 +198,21 @@ namespace ObligatorioMVC.Migrations
                 {
                     table.PrimaryKey("PK_RutinaEjercicios", x => new { x.IdRutina, x.IdEjercicio });
                     table.ForeignKey(
-                        name: "FK_RutinaEjercicios_Ejercicio_IdEjercicio",
+                        name: "FK_RutinaEjercicios_Ejercicios_IdEjercicio",
                         column: x => x.IdEjercicio,
-                        principalTable: "Ejercicio",
+                        principalTable: "Ejercicios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RutinaEjercicios_Rutina_IdRutina",
+                        name: "FK_RutinaEjercicios_Rutinas_IdRutina",
                         column: x => x.IdRutina,
-                        principalTable: "Rutina",
+                        principalTable: "Rutinas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SocioRutina",
+                name: "SocioRutinas",
                 columns: table => new
                 {
                     IdSocio = table.Column<int>(type: "int", nullable: false),
@@ -220,23 +220,23 @@ namespace ObligatorioMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SocioRutina", x => new { x.IdSocio, x.IdRutina });
+                    table.PrimaryKey("PK_SocioRutinas", x => new { x.IdSocio, x.IdRutina });
                     table.ForeignKey(
-                        name: "FK_SocioRutina_Rutina_IdRutina",
+                        name: "FK_SocioRutinas_Rutinas_IdRutina",
                         column: x => x.IdRutina,
-                        principalTable: "Rutina",
+                        principalTable: "Rutinas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SocioRutina_Socio_IdSocio",
+                        name: "FK_SocioRutinas_Socios_IdSocio",
                         column: x => x.IdSocio,
-                        principalTable: "Socio",
+                        principalTable: "Socios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "TipoMaquina",
+                table: "TipoMaquinas",
                 columns: new[] { "Id", "Descripcion", "Nombre" },
                 values: new object[,]
                 {
@@ -269,7 +269,7 @@ namespace ObligatorioMVC.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TipoRutina",
+                table: "TipoRutinas",
                 columns: new[] { "Id", "Nombre" },
                 values: new object[,]
                 {
@@ -279,7 +279,7 @@ namespace ObligatorioMVC.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TipoSocio",
+                table: "TipoSocios",
                 columns: new[] { "Id", "Nombre" },
                 values: new object[,]
                 {
@@ -288,31 +288,26 @@ namespace ObligatorioMVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ejercicio_IdTipoMaquina",
-                table: "Ejercicio",
+                name: "IX_Ejercicios_IdTipoMaquina",
+                table: "Ejercicios",
                 column: "IdTipoMaquina");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Local_IdResponsableLocal",
-                table: "Local",
+                name: "IX_Locales_IdResponsableLocal",
+                table: "Locales",
                 column: "IdResponsableLocal",
                 unique: true,
                 filter: "[IdResponsableLocal] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Maquina_IdLocal",
-                table: "Maquina",
+                name: "IX_Maquinas_IdLocal",
+                table: "Maquinas",
                 column: "IdLocal");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Maquina_IdTipoMaquina",
-                table: "Maquina",
+                name: "IX_Maquinas_IdTipoMaquina",
+                table: "Maquinas",
                 column: "IdTipoMaquina");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rutina_IdTipoRutina",
-                table: "Rutina",
-                column: "IdTipoRutina");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RutinaEjercicios_IdEjercicio",
@@ -320,56 +315,61 @@ namespace ObligatorioMVC.Migrations
                 column: "IdEjercicio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Socio_IdLocal",
-                table: "Socio",
+                name: "IX_Rutinas_IdTipoRutina",
+                table: "Rutinas",
+                column: "IdTipoRutina");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SocioRutinas_IdRutina",
+                table: "SocioRutinas",
+                column: "IdRutina");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Socios_IdLocal",
+                table: "Socios",
                 column: "IdLocal");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Socio_IdTipoSocio",
-                table: "Socio",
+                name: "IX_Socios_IdTipoSocio",
+                table: "Socios",
                 column: "IdTipoSocio");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SocioRutina_IdRutina",
-                table: "SocioRutina",
-                column: "IdRutina");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Maquina");
+                name: "Maquinas");
 
             migrationBuilder.DropTable(
                 name: "RutinaEjercicios");
 
             migrationBuilder.DropTable(
-                name: "SocioRutina");
+                name: "SocioRutinas");
 
             migrationBuilder.DropTable(
-                name: "Ejercicio");
+                name: "Ejercicios");
 
             migrationBuilder.DropTable(
-                name: "Rutina");
+                name: "Rutinas");
 
             migrationBuilder.DropTable(
-                name: "Socio");
+                name: "Socios");
 
             migrationBuilder.DropTable(
-                name: "TipoMaquina");
+                name: "TipoMaquinas");
 
             migrationBuilder.DropTable(
-                name: "TipoRutina");
+                name: "TipoRutinas");
 
             migrationBuilder.DropTable(
-                name: "Local");
+                name: "Locales");
 
             migrationBuilder.DropTable(
-                name: "TipoSocio");
+                name: "TipoSocios");
 
             migrationBuilder.DropTable(
-                name: "Responsable");
+                name: "Responsables");
         }
     }
 }
