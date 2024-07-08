@@ -44,7 +44,10 @@ namespace ObligatorioMVC.Controllers
                 .Include(r => r.TipoRutina)
                 .Include(r => r.RutinaEjercicios)
                     .ThenInclude(re => re.Ejercicio)
+                .Include(r => r.SocioRutinas) // Incluir SocioRutinas
+                    .ThenInclude(sr => sr.Socio)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (rutina == null)
             {
                 return NotFound();
@@ -52,6 +55,7 @@ namespace ObligatorioMVC.Controllers
 
             return View(rutina);
         }
+
 
         // GET: Rutinas/Create
         public IActionResult Create()
